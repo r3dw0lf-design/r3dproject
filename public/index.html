@@ -117,6 +117,7 @@ const APPS={
   notes:{t:'NOTEPAD',i:'✎',w:420,h:320,init:notes},
   term:{t:'TERMINAL',i:'>_',w:480,h:320,init:term},
   set:{t:'DISPLAY',i:'☼',w:320,h:190,init:settings},
+  ppt:{t:'ADVANCED PPT',i:'▤',w:0,h:0,init(){}},
   about:{t:'ABOUT',i:'?',w:340,h:200,init:about}
 };
 let z=10,open={};
@@ -130,11 +131,14 @@ function desktop(){
 $('#start').onclick=e=>{e.stopPropagation();$('#menu').hidden=!$('#menu').hidden};
 document.addEventListener('click',e=>{if(!e.target.closest('#menu'))$('#menu').hidden=true});
 $('#menu').onclick=e=>{const a=e.target.dataset.a;if(!a)return;$('#menu').hidden=true;a==='out'?logout():launch(a)};
-async function logout(){try{await api('logout','POST',{})}catch{}
+async function logout(){closePPT();try{await api('logout','POST',{})}catch{}
   for(const k in open)closeWin(k);USER='';$('#desk').hidden=true;await boot(['SAVING SESSION ...','LOGGED OUT.'],true);showLogin()}
 setInterval(()=>{$('#clk').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})},1000);
 
+function openPPT(){if($('#ppt'))return;const f=document.createElement('iframe');f.id='ppt';f.src='/ppt.html';f.allow='fullscreen';f.title='Advanced PPT';f.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;z-index:99999;background:#06100d';document.body.append(f)}
+window.closePPT=()=>{const f=$('#ppt');if(f)f.remove()};
 function launch(k){
+  if(k==='ppt')return openPPT();
   if(open[k]){focus(k);open[k].el.hidden=false;return}
   const a=APPS[k],box=$('#wins').getBoundingClientRect();
   const w=Math.min(a.w,box.width-8),h=Math.min(a.h,box.height-8),n=Object.keys(open).length;
