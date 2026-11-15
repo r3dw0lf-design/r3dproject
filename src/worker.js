@@ -6,7 +6,8 @@ const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
 const hex = (n) => [...crypto.getRandomValues(new Uint8Array(n))].map((b) => b.toString(16).padStart(2, '0')).join('');
 const json = (d, s = 200, h = {}) => new Response(JSON.stringify(d), { status: s, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...h } });
 const sha = async (t) => b64(await crypto.subtle.digest('SHA-256', enc.encode(t)));
-const cookie = (v, age) => `sid=${v}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${age}`;
+const isHttps = (req) => new URL(req.url).protocol === 'https:' || req.headers.get('x-forwarded-proto') === 'https';
+const cookie = (req, v, age) => `sid=${v}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${age}${isHttps(req) ? '; Secure' : ''}`;
 const DAY = 86400;
 
 async function hash(pw, salt) {
@@ -21,10 +22,20 @@ async function sessionUser(req, env) {
     .bind(await sha(m[1]), Date.now()).first();
 }
 
-async function startSession(env, uid) {
+async function startSession(req, env, uid) {
   const t = hex(32);
   await env.DB.prepare('INSERT INTO sessions(token, user_id, expires) VALUES(?,?,?)').bind(await sha(t), uid, Date.now() + 30 * DAY * 1000).run();
-  return cookie(t, 30 * DAY);
+  return cookie(req, t, 30 * DAY);
+}
+
+const hits = new Map();
+function throttled(req, kind, max) {
+  const ip = req.headers.get('CF-Connecting-IP') || 'local', k = kind + ip, now = Date.now();
+  let r = hits.get(k);
+  if (!r || now - r.t > 10 * 60 * 1000) r = { t: now, n: 0 };
+  r.n++; hits.set(k, r);
+  if (hits.size > 5000) hits.clear();
+  return r.n > max;
 }
 
 let ready = false;
@@ -34,6 +45,7 @@ async function ensureSchema(env) {
     env.DB.prepare('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE COLLATE NOCASE, salt TEXT NOT NULL, hash TEXT NOT NULL, created INTEGER NOT NULL, notes TEXT NOT NULL DEFAULT \'\')'),
     env.DB.prepare('CREATE TABLE IF NOT EXISTS sessions (token TEXT PRIMARY KEY, user_id INTEGER NOT NULL, expires INTEGER NOT NULL)'),
   ]);
+  try { await env.DB.prepare("ALTER TABLE users ADD COLUMN notes TEXT NOT NULL DEFAULT ''").run(); } catch (e) { /* column already there */ }
   ready = true;
 }
 
@@ -47,6 +59,7 @@ async function handle(request, env) {
 
   try {
     if (route === 'register' && method === 'POST') {
+      if (throttled(request, 'reg', 10)) return json({ error: 'TOO MANY TRIES - WAIT A FEW MINUTES' }, 429);
       const u = String(body.username || '').trim(), p = String(body.password || '');
       if (!/^[A-Za-z0-9_]{3,16}$/.test(u)) return json({ error: 'USERNAME: 3-16 LETTERS, NUMBERS OR _' }, 400);
       if (p.length < 6 || p.length > 100) return json({ error: 'PASSWORD: 6-100 CHARACTERS' }, 400);
@@ -59,21 +72,22 @@ async function handle(request, env) {
         if (/UNIQUE/i.test(String(e.message))) return json({ error: 'USERNAME ALREADY TAKEN' }, 409);
         throw e;
       }
-      return json({ username: u }, 200, { 'Set-Cookie': await startSession(env, uid) });
+      return json({ username: u }, 200, { 'Set-Cookie': await startSession(request, env, uid) });
     }
 
     if (route === 'login' && method === 'POST') {
+      if (throttled(request, 'login', 12)) return json({ error: 'TOO MANY TRIES - WAIT A FEW MINUTES' }, 429);
       const u = String(body.username || '').trim(), p = String(body.password || '');
       const row = await env.DB.prepare('SELECT id, username, salt, hash FROM users WHERE username = ?').bind(u).first();
       const ok = row && (await hash(p, unb64(row.salt))) === row.hash;
       if (!ok) return json({ error: 'INVALID USERNAME OR PASSWORD' }, 401);
-      return json({ username: row.username }, 200, { 'Set-Cookie': await startSession(env, row.id) });
+      return json({ username: row.username }, 200, { 'Set-Cookie': await startSession(request, env, row.id) });
     }
 
     if (route === 'logout' && method === 'POST') {
       const m = (request.headers.get('Cookie') || '').match(/(?:^|;\s*)sid=([a-f0-9]+)/);
       if (m) await env.DB.prepare('DELETE FROM sessions WHERE token = ?').bind(await sha(m[1])).run();
-      return json({ ok: true }, 200, { 'Set-Cookie': cookie('', 0) });
+      return json({ ok: true }, 200, { 'Set-Cookie': cookie(request, '', 0) });
     }
 
     const user = await sessionUser(request, env);
@@ -95,4 +109,9 @@ async function handle(request, env) {
   }
 }
 
-export default { fetch: (request, env) => handle(request, env).catch(() => json({ error: 'SERVER ERROR' }, 500)) };
+export default {
+  fetch(request, env) {
+    if (!new URL(request.url).pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    return handle(request, env).catch(() => json({ error: 'SERVER ERROR' }, 500));
+  },
+};
