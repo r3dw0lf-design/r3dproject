@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RETROOS 86</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--fg:#33ff66;--dim:#1a8c3a;--bg:#031108}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#050505;color:var(--fg);font:22px/1.15 'VT323','Courier New',monospace;overflow:hidden}
+#screen{position:fixed;inset:10px;border-radius:32px/26px;background:var(--bg);overflow:hidden;text-shadow:0 0 5px var(--fg);box-shadow:0 0 0 6px #1b1b1b,0 0 60px color-mix(in srgb,var(--fg) 35%,transparent),inset 0 0 140px rgba(0,0,0,.85);animation:flick 4s infinite}
+#screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55))}
+#screen::before{content:"";position:absolute;left:0;right:0;height:90px;z-index:9998;pointer-events:none;background:linear-gradient(transparent,rgba(255,255,255,.05),transparent);animation:roll 7s linear infinite}
+@keyframes roll{from{top:-100px}to{top:100%}}
+@keyframes flick{0%,100%{opacity:1}92%{opacity:.97}93%{opacity:.9}94%{opacity:1}}
+@media(prefers-reduced-motion:reduce){#screen,#screen::before{animation:none}}
+button,input,textarea{font:inherit;color:inherit;text-shadow:inherit}
+button{background:transparent;border:2px solid var(--fg);padding:2px 12px;cursor:pointer}
+button:hover,button.on{background:var(--fg);color:var(--bg);text-shadow:none}
+:focus-visible{outline:2px dashed var(--fg);outline-offset:2px}
+input,textarea{background:rgba(0,0,0,.35);border:2px solid var(--dim);padding:3px 8px;width:100%;caret-color:var(--fg)}
+[hidden]{display:none!important}
+#boot{position:absolute;inset:0;padding:28px;margin:0;white-space:pre-wrap;font:inherit}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;overflow:auto}
+.logo{margin:0;font-size:17px;line-height:1;text-align:center}
+.box{width:min(380px,100%);border:2px solid var(--fg);padding:16px;display:grid;gap:10px;background:rgba(0,0,0,.25)}
+.tabs{display:flex;gap:8px}.tabs button{flex:1}
+label{display:grid;gap:3px}
+#msg{min-height:1.2em;color:#ff6b4a;text-shadow:0 0 5px #ff6b4a}
+.cur::after{content:"█";animation:bl 1s steps(2) infinite}@keyframes bl{50%{opacity:0}}
+/* desktop */
+#desk{position:absolute;inset:0}
+#icons{position:absolute;top:14px;left:14px;display:grid;gap:14px}
+.ico{width:92px;text-align:center;background:none;border:0;padding:4px}
+.ico b{display:block;font-size:42px;font-weight:400;border:2px solid var(--fg);margin:0 auto 3px;width:60px;height:52px;line-height:50px}
+.ico:hover b,.ico:hover{background:none;color:var(--fg)}.ico:hover b{background:var(--dim)}
+#wins{position:absolute;inset:0 0 38px 0}
+.win{position:absolute;display:flex;flex-direction:column;background:var(--bg);border:2px solid var(--fg);box-shadow:6px 6px 0 rgba(0,0,0,.6);min-width:220px}
+.win .tb{display:flex;justify-content:space-between;align-items:center;background:var(--fg);color:var(--bg);text-shadow:none;padding:0 6px;cursor:move;touch-action:none;user-select:none}
+.win .tb button{border-color:var(--bg);padding:0 8px;line-height:1.1;color:var(--bg)}
+.win .tb button:hover{background:var(--bg);color:var(--fg)}
+.win .bd{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px;overflow:auto}
+.win textarea{flex:1;resize:none;min-height:0}
+#bar{position:absolute;left:0;right:0;bottom:0;height:38px;display:flex;align-items:center;gap:8px;padding:0 8px;border-top:2px solid var(--fg);background:var(--bg)}
+#tasks{flex:1;display:flex;gap:6px;overflow:hidden}
+#menu{position:absolute;left:8px;bottom:42px;border:2px solid var(--fg);background:var(--bg);display:grid;min-width:190px}
+#menu button{border:0;text-align:left;padding:4px 12px}
+#term{white-space:pre-wrap;word-break:break-word;flex:1;overflow:auto}
+.tin{display:flex;gap:6px}.tin input{border:0;background:none;padding:0}
+.sw{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+</style></head>
+<body>
+<div id="screen">
+  <pre id="boot"></pre>
+
+  <div id="login" class="center" hidden>
+    <pre class="logo">█▀█ █▀▀ ▀█▀ █▀█ █▀█ █▀ ░░ █▀▀ █▀▀
+█▀▄ ██▄ ░█░ █▀▄ █▄█ ▄█ ░░ ▄▄█ ▄▄█
+~ RETROOS 86 · TERMINAL ACCESS ~</pre>
+    <div class="box">
+      <div class="tabs"><button data-t="login" class="on">LOGIN</button><button data-t="reg">CREATE ACCOUNT</button></div>
+      <label>USERNAME<input id="u" autocomplete="username" maxlength="16" autocapitalize="off" spellcheck="false"></label>
+      <label>PASSWORD<input id="p" type="password" autocomplete="current-password"></label>
+      <label id="c2" hidden>CONFIRM PASSWORD<input id="p2" type="password" autocomplete="new-password"></label>
+      <button id="go">&gt; ENTER</button>
+      <div id="msg" role="alert"></div>
+    </div>
+  </div>
+
+  <div id="desk" hidden>
+    <div id="icons"></div><div id="wins"></div>
+    <div id="menu" hidden></div>
+    <div id="bar"><button id="start">[RETROOS]</button><div id="tasks"></div><span id="clk"></span></div>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let USER='', mode='login';
+async function api(p,m='GET',b){
+  const r=await fetch('/api/'+p,{method:m,headers:b?{'Content-Type':'application/json'}:{},body:b?JSON.stringify(b):undefined});
+  let d={};try{d=await r.json()}catch{}
+  if(!r.ok)throw new Error(d.error||'SYSTEM ERROR ('+r.status+')');return d;
+}
+/* theme */
+const THEMES={GREEN:['#33ff66','#1a8c3a','#031108'],AMBER:['#ffb000','#8c6000','#120b00'],CYAN:['#4df3ff','#1f8a94','#021214'],WHITE:['#e6e6e6','#7a7a7a','#0b0b0b']};
+function theme(n){const t=THEMES[n];if(!t)return false;const s=document.documentElement.style;s.setProperty('--fg',t[0]);s.setProperty('--dim',t[1]);s.setProperty('--bg',t[2]);try{localStorage.setItem('rtheme',n)}catch{}return true}
+try{theme(localStorage.getItem('rtheme'))}catch{}
+
+/* boot */
+async function boot(lines,fast){const b=$('#boot');b.hidden=false;b.textContent='';for(const l of lines){b.textContent+=l+'\n';await sleep(fast?60:150)}await sleep(fast?150:350);b.hidden=true}
+async function start(){
+  await boot(['RETROOS BIOS v1.986','(C) 1986 RETRO SYSTEMS INC.','','MEMORY TEST ........ 640K OK','DETECTING DRIVES ... A: B: C:','LINKING TO SERVER ..','']);
+  try{const d=await api('me');USER=d.username;desktop()}catch{showLogin()}
+}
+/* login */
+function showLogin(){$('#desk').hidden=true;$('#login').hidden=false;$('#msg').textContent='';$('#u').focus()}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  mode=b.dataset.t;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#c2').hidden=mode!=='reg';$('#p').autocomplete=mode==='reg'?'new-password':'current-password';$('#msg').textContent='';
+});
+async function submit(){
+  const u=$('#u').value.trim(),p=$('#p').value,m=$('#msg');m.style.color='';m.textContent='';
+  if(mode==='reg'&&p!==$('#p2').value){m.textContent='PASSWORDS DO NOT MATCH';return}
+  $('#go').disabled=true;m.textContent='CONNECTING...';m.style.color='var(--fg)';
+  try{const d=await api(mode==='reg'?'register':'login','POST',{username:u,password:p});
+    USER=d.username;$('#p').value=$('#p2').value='';$('#login').hidden=true;
+    await boot(['WELCOME, '+USER.toUpperCase(),'MOUNTING USER DRIVE ... OK','STARTING RETROOS ...'],true);desktop();
+  }catch(e){m.style.color='';m.textContent=e.message}
+  $('#go').disabled=false;
+}
+$('#go').onclick=submit;
+['u','p','p2'].forEach(i=>$('#'+i).addEventListener('keydown',e=>{if(e.key==='Enter')submit()}));
+
+/* desktop + windows */
+const APPS={
+  notes:{t:'NOTEPAD',i:'✎',w:420,h:320,init:notes},
+  term:{t:'TERMINAL',i:'>_',w:480,h:320,init:term},
+  set:{t:'DISPLAY',i:'☼',w:320,h:190,init:settings},
+  about:{t:'ABOUT',i:'?',w:340,h:200,init:about}
+};
+let z=10,open={};
+function desktop(){
+  $('#login').hidden=true;$('#desk').hidden=false;
+  $('#icons').innerHTML='';
+  for(const k in APPS){const b=document.createElement('button');b.className='ico';b.innerHTML=`<b>${APPS[k].i}</b>${APPS[k].t}`;b.ondblclick=()=>launch(k);b.onclick=()=>{if(matchMedia('(pointer:coarse)').matches)launch(k)};b.onkeydown=e=>{if(e.key==='Enter')launch(k)};$('#icons').append(b)}
+  $('#menu').innerHTML=Object.keys(APPS).map(k=>`<button data-a="${k}">${APPS[k].t}</button>`).join('')+`<button data-a="out">LOG OUT (${USER})</button>`;
+  launch('about');
+}
+$('#start').onclick=e=>{e.stopPropagation();$('#menu').hidden=!$('#menu').hidden};
+document.addEventListener('click',e=>{if(!e.target.closest('#menu'))$('#menu').hidden=true});
+$('#menu').onclick=e=>{const a=e.target.dataset.a;if(!a)return;$('#menu').hidden=true;a==='out'?logout():launch(a)};
+async function logout(){try{await api('logout','POST',{})}catch{}
+  for(const k in open)closeWin(k);USER='';$('#desk').hidden=true;await boot(['SAVING SESSION ...','LOGGED OUT.'],true);showLogin()}
+setInterval(()=>{$('#clk').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})},1000);
+
+function launch(k){
+  if(open[k]){focus(k);open[k].el.hidden=false;return}
+  const a=APPS[k],box=$('#wins').getBoundingClientRect();
+  const w=Math.min(a.w,box.width-8),h=Math.min(a.h,box.height-8),n=Object.keys(open).length;
+  const el=document.createElement('div');el.className='win';
+  el.style.cssText=`width:${w}px;height:${h}px;left:${Math.max(4,Math.min(130+n*28,box.width-w-4))}px;top:${Math.max(4,Math.min(30+n*28,box.height-h-4))}px`;
+  el.innerHTML=`<div class="tb"><span>${a.t}</span><span><button data-m aria-label="Minimize">_</button> <button data-x aria-label="Close">X</button></span></div><div class="bd"></div>`;
+  $('#wins').append(el);
+  const t=document.createElement('button');t.textContent=a.t;t.onclick=()=>{el.hidden=!el.hidden;if(!el.hidden)focus(k)};$('#tasks').append(t);
+  open[k]={el,t};
+  el.querySelector('[data-x]').onclick=()=>closeWin(k);
+  el.querySelector('[data-m]').onclick=()=>{el.hidden=true;t.classList.remove('on')};
+  el.addEventListener('pointerdown',()=>focus(k));
+  const tb=el.querySelector('.tb');
+  tb.onpointerdown=e=>{if(e.target.closest('button'))return;const dx=e.clientX-el.offsetLeft,dy=e.clientY-el.offsetTop;tb.setPointerCapture(e.pointerId);
+    tb.onpointermove=m=>{const B=$('#wins');el.style.left=Math.max(0,Math.min(m.clientX-dx,B.clientWidth-60))+'px';el.style.top=Math.max(0,Math.min(m.clientY-dy,B.clientHeight-28))+'px'};
+    tb.onpointerup=()=>{tb.onpointermove=null}};
+  a.init(el.querySelector('.bd'),k);focus(k);
+}
+function focus(k){const o=open[k];o.el.style.zIndex=++z;for(const x in open)open[x].t.classList.toggle('on',x===k)}
+function closeWin(k){const o=open[k];if(!o)return;o.el.remove();o.t.remove();delete open[k]}
+
+/* apps */
+function notes(bd){
+  bd.innerHTML='<textarea spellcheck="false" placeholder="Type here. Saved to your account on the server."></textarea><div class="st">LOADING...</div>';
+  const ta=bd.querySelector('textarea'),st=bd.querySelector('.st');let tm;
+  api('notes').then(d=>{ta.value=d.notes;st.textContent='READY'}).catch(e=>st.textContent=e.message);
+  ta.oninput=()=>{st.textContent='EDITING...';clearTimeout(tm);tm=setTimeout(async()=>{try{await api('notes','PUT',{notes:ta.value});st.textContent='SAVED TO SERVER'}catch(e){st.textContent='SAVE FAILED: '+e.message}},700)};
+}
+function term(bd){
+  bd.innerHTML='<div id="term"></div><div class="tin"><span>C:\\&gt;</span><input autocomplete="off" spellcheck="false" autocapitalize="off"></div>';
+  const o=bd.querySelector('#term'),i=bd.querySelector('input');
+  const say=t=>{o.textContent+=t+'\n';o.scrollTop=o.scrollHeight};
+  say('RETROOS COMMAND INTERPRETER. TYPE HELP.');
+  bd.onclick=()=>i.focus();setTimeout(()=>i.focus(),50);
+  i.onkeydown=async e=>{if(e.key!=='Enter')return;const c=i.value.trim();i.value='';say('C:\\> '+c);const[a,...r]=c.split(/\s+/);
+    switch((a||'').toLowerCase()){
+      case'':break;
+      case'help':say('HELP WHOAMI DATE ECHO DIR TYPE NOTES.TXT COLOR <GREEN|AMBER|CYAN|WHITE> CLS LOGOUT');break;
+      case'whoami':say(USER);break;
+      case'date':say(new Date().toString());break;
+      case'echo':say(r.join(' '));break;
+      case'dir':say(' VOLUME: '+USER.toUpperCase()+'\n NOTES.TXT\n 1 FILE(S)');break;
+      case'type':try{say((await api('notes')).notes||'(EMPTY FILE)')}catch(x){say(x.message)}break;
+      case'color':say(theme((r[0]||'').toUpperCase())?'OK':'UNKNOWN COLOR');break;
+      case'cls':o.textContent='';break;
+      case'logout':logout();break;
+      default:say('BAD COMMAND OR FILE NAME');}};
+}
+function settings(bd){
+  bd.innerHTML='<div>PHOSPHOR COLOR:</div><div class="sw"></div>';
+  for(const n in THEMES){const b=document.createElement('button');b.textContent=n;b.onclick=()=>theme(n);bd.querySelector('.sw').append(b)}
+}
+function about(bd){bd.innerHTML=`<div>RETROOS 86<br>USER: ${USER.toUpperCase()}<br><br>DOUBLE-CLICK AN ICON TO OPEN IT (TAP ON PHONES), OR USE THE [RETROOS] MENU.<br><br>YOUR NOTES LIVE ON THE SERVER, SO THEY FOLLOW YOUR ACCOUNT.</div>`}
+
+start();
+</script>
+</body></html>
