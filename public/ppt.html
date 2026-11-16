@@ -55,6 +55,19 @@ details{border:1px solid var(--ln);border-radius:10px;background:#ffffff05}summa
 @keyframes trfade{from{opacity:0}}@keyframes trslide{from{transform:translateX(7%);opacity:0}}@keyframes trzoom{from{transform:scale(.88);opacity:0}}@keyframes trflip{from{transform:perspective(1400px) rotateY(55deg);opacity:0}}@keyframes trwipe{from{clip-path:inset(0 100% 0 0)}}
 .pn{position:fixed;left:0;right:0;bottom:0;background:#000c;color:#fff;padding:14px 24px 30px;font-size:20px;z-index:4}.pg{position:fixed;left:0;bottom:0;height:3px;background:var(--g);transition:width .4s;z-index:5}
 
+#dlg{position:fixed;inset:0;background:#000b;display:grid;place-items:center;z-index:70}#dlg[hidden]{display:none}.dlg p{color:var(--mu);line-height:1.5}.dng{background:#ff5a5a!important;color:#240000!important;border-color:#ff5a5a!important;font-weight:800}
+.cs{width:100%;height:32px;padding:0;border-radius:7px}.cp{display:block}
+#cpk{position:fixed;z-index:80;left:0;top:0}#cpk[hidden]{display:none}.cpb{background:var(--ui);border:1px solid var(--g);border-radius:12px;padding:10px;display:grid;gap:8px;box-shadow:0 18px 50px #000}.cph{display:flex;justify-content:space-between;align-items:center}.cpv{height:34px;border-radius:8px;border:1px solid var(--ln)}
+.cpb label{display:grid;gap:3px;color:var(--mu);font-size:12px}.cpb input[type=range]{padding:0;border:0;background:none;accent-color:#ffc45c}
+#ch{-webkit-appearance:none;appearance:none;height:12px;border-radius:6px;background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)!important}#ch::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid #000}#ch::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #000}
+.csw{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}.csw button{height:22px;padding:0;border-radius:6px}
+#tour{position:fixed;inset:0;z-index:90}#tour[hidden]{display:none}
+.tsp{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px #000b,0 0 0 3px #ffc45c;pointer-events:none;transition:all .35s ease}
+.tcard{position:fixed;width:min(320px,calc(100vw - 20px));background:var(--ui);border:1px solid var(--g);border-radius:14px;padding:14px;display:grid;gap:8px;box-shadow:0 18px 50px #000;transition:left .35s ease,top .35s ease}.tcard h3{font:700 20px Fraunces,serif;color:var(--g)}.tcard p{line-height:1.5;font-size:14px}.tcard small{color:var(--mu)}
+#toast{position:fixed;left:50%;bottom:22px;translate:-50% 20px;background:var(--ui);border:1px solid var(--g);border-radius:10px;padding:9px 16px;opacity:0;pointer-events:none;transition:.3s;z-index:95;font-size:13px;max-width:92vw;text-align:center}#toast.on{opacity:1;translate:-50% 0}
+.tabhint{background:#ffc45c14;border:1px solid #ffc45c33;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45}
+.empty{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none;color:#ffffffd0;font-size:15px;line-height:1.6;padding:24px;text-shadow:0 2px 10px #000}.empty b{color:#ffc45c;font-size:18px}
+
 /* ===== SLIDE + OBJECT STYLES (the "special effects") ===== */
 .sl{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;overflow:hidden;color:var(--ink);--mut:color-mix(in srgb,var(--ink) 78%,var(--bg));font-family:var(--fb);
 background:radial-gradient(900px 500px at 85% 0,color-mix(in srgb,var(--a2) 13%,transparent),transparent 60%),radial-gradient(700px 500px at 0 100%,color-mix(in srgb,var(--a1) 11%,transparent),transparent 60%),var(--bg)}
@@ -141,6 +154,10 @@ background:linear-gradient(color-mix(in srgb,var(--bg) 90%,var(--ink)),color-mix
 .sl[data-cm=soft]{filter:saturate(.6) brightness(1.08)}
 .sl[data-cm=light],.sl[data-cm=light] img{filter:invert(1) hue-rotate(180deg)}.sl[data-cm=light] img{filter:none}
 .sl[data-cm=mono]{filter:grayscale(1)}.sl[data-cm=vintage]{filter:sepia(.55) saturate(1.25) contrast(1.05)}.sl[data-cm=vivid]{filter:contrast(1.18) saturate(1.45)}
+
+.ob.ins{animation:insin .55s cubic-bezier(.2,.9,.3,1.2) both}@keyframes insin{from{opacity:0;transform:scale(.6)}}
+.sl .typer{font-family:'Space Mono',monospace;font-weight:700;white-space:nowrap;overflow:hidden;border-right:.12em solid currentColor;width:calc(var(--n)*1ch);max-width:100%;animation:typing var(--tt,3s) steps(var(--n),end) calc(var(--d,0s) + .3s) both,caret .8s step-end infinite}
+@keyframes typing{from{width:0}}@keyframes caret{50%{border-color:transparent}}
 @media(prefers-reduced-motion:reduce){.sl *{animation-duration:.01s!important;animation-iteration-count:1!important}}
 
 #tabs button{padding:7px 2px;font-size:12px}.cr{display:grid;grid-template-columns:96px 1fr;gap:6px;align-items:end}
@@ -154,11 +171,11 @@ code{display:block;background:#0006;border-radius:6px;padding:6px;font-size:11px
  <button id="un" title="Undo (Ctrl+Z)">↶ Undo</button><button id="re" title="Redo (Ctrl+Shift+Z)">↷ Redo</button><button id="dk">My decks</button><button id="nw">New</button><button id="sv" title="Ctrl+S">Save</button><button id="hp" title="Help and shortcuts">?</button><button id="pr" class="on" title="F5">Present ▶</button>
 </header>
 <main>
- <aside id="slc"><div id="thumbs"></div><div class="srow"><button id="as" title="Add a blank slide">+ Slide</button><button id="ds" title="Duplicate slide">Copy</button><button id="rs" title="Delete slide">Delete</button><button id="ms" title="Move up">↑</button><button id="mn" title="Move down">↓</button></div></aside>
+ <aside id="slc"><div id="thumbs"></div><div class="srow"><button id="as" title="Add a blank slide after this one">+ New slide</button><button id="ds" title="Make a copy of this slide">Duplicate</button><button id="rs" title="Delete this slide">Delete</button><button id="ms" title="Move this slide earlier">↑ Earlier</button><button id="mn" title="Move this slide later">↓ Later</button></div></aside>
  <section id="stagebox"><div id="tip" hidden></div><div id="qa"></div><div id="sw"><div id="fr"></div></div><div id="sb"><button id="zo" title="Zoom out">−</button><span id="zl">100%</span><button id="zi" title="Zoom in">+</button><button id="zf">Fit</button><button id="sn" class="on" title="Snap to centre and other objects">Snap on</button><span class="sp"></span><button id="pl">▶ Preview animations</button></div></section>
  <aside id="side"><nav id="tabs"><button data-t="add" class="on">Insert</button><button data-t="edit">Format</button><button data-t="slide">Slide</button><button data-t="deck">Design</button></nav><div id="pane"></div></aside>
 </main>
-<div id="modal" hidden></div><div id="pres" hidden></div>
+<div id="modal" hidden></div><div id="pres" hidden></div><div id="dlg" hidden></div><div id="cpk" hidden></div><div id="tour" hidden></div><div id="toast" role="status"></div>
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -223,17 +240,20 @@ const T={
  emoji:{n:'Big emoji',ic:'🚀',w:160,h:160,p:{text:'🚀',fs:120},f:[['text','Emoji'],['fs','Size','num']],r:p=>`<div style="font-size:${p.fs}px;line-height:1;text-align:center" data-k="text">${esc(p.text)}</div>`},
  ring:{n:'Spinner ring',ic:'◌',w:120,h:120,p:{},f:[],r:()=>`<div class="rg"></div>`},
  chart:{n:'Bar chart',ic:'▮▮',w:560,h:300,p:{data:'2022:40\n2023:65\n2024:90\n2025:75',fs:18},f:[['data','Label:value per line','area'],['fs','Font size','num']],r:p=>{const D=lines(p.data).map(l=>{const i=l.lastIndexOf(':');return[l.slice(0,i<0?l.length:i),+l.slice(i+1)||0]}),mx=Math.max(1,...D.map(d=>d[1]));return`<div class="bars" style="font-size:${p.fs}px">${D.map(d=>`<div class="bc"><div class="bar"><i style="--h:${Math.round(d[1]/mx*100)}%"></i></div><span>${esc(d[0])}<br><b>${d[1]}</b></span></div>`).join('')}</div>`}},
- orb:{n:'Glow orb',ic:'✺',w:360,h:360,p:{c:'a2',op:45},f:[['c','Color','color'],['op','Opacity %','num']],r:p=>`<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,${cc(p.c)},transparent 70%);filter:blur(30px);opacity:${(+p.op||0)/100}"></div>`}
+ orb:{n:'Glow orb',ic:'✺',w:360,h:360,p:{c:'a2',op:45},f:[['c','Color','color'],['op','Opacity %','num']],r:p=>`<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,${cc(p.c)},transparent 70%);filter:blur(30px);opacity:${(+p.op||0)/100}"></div>`},
+ typer:{n:'Typewriter text',ic:'⌨',w:700,h:70,p:{text:'Typing this out…',fs:40,c:'a1',spd:3},f:[['text','Text'],['fs','Font size','num'],['spd','Typing time (seconds)','num'],['c','Colour','color']],r:p=>{const t=String(p.text||'').replace(/\n/g,' ');return`<div class="typer" data-k="text" style="--n:${Math.max(1,[...t].length)};--tt:${Math.max(.5,+p.spd||3)}s;font-size:${p.fs}px;color:${cc(p.c)}">${esc(t)}</div>`}}
 };
 const AN=['rise','fade','zoom','left','right','drop','blur','spin','flip','bounce','wipe','none'],AM=['none','float','pulse','swing','spin','glow'];
 
 /* ---------- state ---------- */
+const EMPTY='<div class="empty"><div><b>This slide is empty</b><br>Open the <b>Insert</b> tab on the right and tap anything to add it.<br>Or pick a ready-made layout in the <b>Slide</b> tab.</div></div>';
 let deck,id=null,sel=null,cur=0,tab='add',hist=[],fut=[],lastSnap=0,S=.5,Z=1,dirty=false,tA,tT,allT=false,saving=false,dr=null,pi=0,clip=null,SNAP=true,q='',cat='All',notesOn=false,raf=0,pe=null;
 const closed=new Set(['Custom colours','Copy as CSS','Sample slides']);
-const CAT={Text:['title','heading','text','kicker','quote','badge'],Shapes:['shape','orb','divider','ring','track','emoji','coin'],Data:['stepper','counter','meter','chart','table','pulse','list'],Cards:['card','chips','ticker'],Media:['image']};
-const TEXTY=new Set(['title','heading','text','kicker','quote','badge','card','list','chips','table','counter','pulse','emoji']);
+const CAT={Text:['title','heading','text','typer','kicker','quote','badge'],Shapes:['shape','orb','divider','ring','track','emoji','coin'],Data:['stepper','counter','meter','chart','table','pulse','list'],Cards:['card','chips','ticker'],Media:['image']};
+const TEXTY=new Set(['typer','title','heading','text','kicker','quote','badge','card','list','chips','table','counter','pulse','emoji']);
 const TRN={none:'none',fade:'trfade',slide:'trslide',zoom:'trzoom',flip:'trflip',wipe:'trwipe'},SHN=['none','soft','hard','glow','neon'];
-const mk=(t,x=80,y=80)=>({id:uid(),type:t,x,y,w:T[t].w,h:T[t].h,an:'rise',dl:0,du:.9,am:'none',rot:0,op:100,sh:'none',bl:0,lk:false,ts:{},p:{...T[t].p}});
+const DEF={title:['blur','none'],heading:['rise','none'],text:['fade','none'],kicker:['left','none'],quote:['left','none'],badge:['bounce','pulse'],card:['zoom','none'],list:['rise','none'],chips:['rise','none'],ticker:['fade','none'],stepper:['wipe','none'],pulse:['zoom','none'],meter:['left','none'],coin:['spin','none'],track:['wipe','none'],image:['zoom','none'],shape:['zoom','float'],table:['rise','none'],counter:['zoom','none'],divider:['wipe','none'],emoji:['bounce','float'],ring:['spin','none'],chart:['rise','none'],orb:['fade','float'],typer:['fade','none']};
+const mk=(t,x=80,y=80)=>{const d=DEF[t]||['rise','none'];return{id:uid(),type:t,x,y,w:T[t].w,h:T[t].h,an:d[0],dl:0,du:.9,am:d[1],rot:0,op:100,sh:'none',bl:0,lk:false,ts:{},p:{...T[t].p}}};
 function starter(){const o=[mk('orb',-100,-120),mk('kicker',80,90),mk('title',80,140),mk('text',80,380),mk('stepper',80,540)];o[0].an='none';o[0].w=o[0].h=560;o[1].p.text='WELCOME TO ADVANCED PPT';o[1].dl=.1;o[2].dl=.2;o[2].h=220;o[3].p.text='Open the Insert tab to add objects. Drag to move, pull the corner to resize, double-click text to edit.';o[3].dl=.4;o[4].w=1100;o[4].dl=.6;return{title:'Untitled deck',theme:{...pal(PAL['Gold & Emerald']),orbs:true,cm:'solid',fh:'Fraunces',fb:'Manrope'},slides:[{objs:o,tr:'fade'}]}}
 const find=i=>deck.slides[cur].objs.find(o=>o.id==i),curObj=()=>sel&&find(sel);
 const stat=t=>$('#st').textContent=t;
@@ -245,7 +265,7 @@ const objHTML=o=>{const t=o.ts||{},f=[SH[o.sh]||'',o.bl?`blur(${o.bl}px)`:''].jo
  return`<div class="ob" data-id="${o.id}" data-an="${o.an}"${o.lk?' data-lk':''} style="left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px;--d:${o.dl}s;--du:${o.du||.9}s;rotate:${o.rot||0}deg"><div class="am" data-am="${o.am}"><div class="in"${t.b?' data-b':''}${t.i?' data-i':''}${t.u?' data-u':''}${t.up?' data-up':''}${t.ls?' data-ls':''}${t.lh?' data-lh':''} style="opacity:${(o.op??100)/100};${f?`filter:${f};`:''}text-align:${t.al||'left'};--ls:${t.ls||0}px;--lh:${t.lh||1.3}">${T[o.type].r(o.p)}</div></div></div>`};
 const bgCSS=b=>{if(!b||b.t=='theme')return'';if(b.t=='solid')return`background:${b.c1};`;if(b.t=='grad')return`background:linear-gradient(${b.ang??135}deg,${b.c1},${b.c2});`;const u=safeImg(b.src||'').replace(/'/g,'%27');if(b.t=='img'&&u){const d=(b.dim??40)/100;return`background:linear-gradient(rgba(0,0,0,${d}),rgba(0,0,0,${d})),url('${u}') center/cover;`}return''};
 const slideHTML=(s,t0,cls='')=>{const th=TH(t0);return`<div class="sl ${cls}" data-cm="${th.cm}" style="--a1:${th.a1};--a2:${th.a2};--bg:${th.bg};--ink:${th.ink};--fh:${FF[th.fh]||FF.Fraunces};--fb:${FF[th.fb]||FF.Manrope};${bgCSS(s.bg)}">${th.orbs&&s.orbs!==false?'<div class="orb o1"></div><div class="orb o2"></div>':''}${s.objs.map(objHTML).join('')}</div>`};
-function render(){const b=$('#sw');const fit=Math.max(.1,Math.min((b.clientWidth-24)/1280,(b.clientHeight-24)/720));S=fit*Z;const f=$('#fr');f.style.width=1280*S+'px';f.style.height=720*S+'px';f.innerHTML=slideHTML(deck.slides[cur],deck.theme);const sl=f.firstElementChild;sl.style.transform=`scale(${S})`;sl.style.setProperty('--hs',(18/S)+'px');sl.style.setProperty('--os',(2/S)+'px');markSel();$('#zl').textContent=Math.round(Z*100)+'%'}
+function render(){const b=$('#sw');const fit=Math.max(.1,Math.min((b.clientWidth-24)/1280,(b.clientHeight-24)/720));S=fit*Z;const f=$('#fr');f.style.width=1280*S+'px';f.style.height=720*S+'px';f.innerHTML=slideHTML(deck.slides[cur],deck.theme);const sl=f.firstElementChild;sl.style.transform=`scale(${S})`;sl.style.setProperty('--hs',(18/S)+'px');sl.style.setProperty('--os',(2/S)+'px');if(!deck.slides[cur].objs.length)f.insertAdjacentHTML('beforeend',EMPTY);markSel();$('#zl').textContent=Math.round(Z*100)+'%'}
 function thumbs(){$('#thumbs').innerHTML=deck.slides.map((s,i)=>`<div class="th${i==cur?' cur':''}" data-i="${i}" draggable="true"><b>${i+1}</b><div class="tf">${slideHTML(s,deck.theme,'tn')}</div></div>`).join('')}
 function thumbOne(){const t=$('#thumbs .th.cur .tf');if(t)t.innerHTML=slideHTML(deck.slides[cur],deck.theme,'tn')}
 function redraw(o){const el=$('#fr [data-id="'+o.id+'"]');if(!el)return render();const t=document.createElement('div');t.innerHTML=objHTML(o);el.replaceWith(t.firstElementChild);markSel()}
@@ -260,12 +280,14 @@ function qa(){const o=curObj(),b=$('#qa');if(!o){b.innerHTML='<span class="hint"
 /* ---------- side panel ---------- */
 const sec=(n,h)=>`<details data-s="${n}"${closed.has(n)?'':' open'}><summary>${n}</summary><div class="sbd">${h}</div></details>`;
 const rr=(l,a,v,mn,mx,st)=>`<label>${l}<span class="rr"><input type="range" ${a} min="${mn}" max="${mx}" step="${st}" value="${v}"><output>${v}</output></span></label>`;
+const cin=(a,v)=>`<span class="cp"><button type="button" class="cs" data-cpb style="background:${esc(v)}" aria-label="Pick a colour"></button><input type="hidden" ${a} value="${esc(v)}"></span>`;
+const rtok=c=>{const t=TH(deck.theme);return({a1:t.a1,a2:t.a2,ink:t.ink,mut:t.ink})[c]||c};
 const opt=(a,v)=>a.map(x=>`<option${x==v?' selected':''}>${x}</option>`).join('');
 const fld=(o,[k,l,ty,op])=>{const v=o.p[k];
  if(ty=='area')return`<label>${l}<textarea data-k="${k}" rows="4">${esc(v)}</textarea></label>`;
  if(ty=='sel')return`<label>${l}<select data-k="${k}">${opt(op,v)}</select></label>`;
  if(ty=='num')return`<label>${l}<input type="number" data-k="${k}" value="${v}"></label>`;
- if(ty=='color'){const tk=T[o.type].p[k],hx=/^#/.test(v);return`<label>${l}${hx?'':' (theme)'}<input type="color" data-k="${k}" value="${hx?v:'#ffffff'}"></label>${hx&&!/^#/.test(tk)?`<button data-rt="${k}">↺ use theme colour</button>`:''}`}
+ if(ty=='color'){const tk=T[o.type].p[k],hx=/^#/.test(v);return`<label>${l}${hx?'':' (theme)'}${cin(`data-k="${k}"`,hx?v:rtok(v))}</label>${hx&&!/^#/.test(tk)?`<button data-rt="${k}">↺ use theme colour</button>`:''}`}
  if(ty=='img')return`<label>${l}<input data-k="${k}" value="${String(v).startsWith('data:')?'(uploaded image)':esc(v)}" placeholder="https://…"></label><label>Or upload<input type="file" accept="image/*" data-up="${k}"></label>`;
  return`<label>${l}<input data-k="${k}" value="${esc(v)}"></label>`};
 const libHTML=()=>{const l=Object.keys(T).filter(k=>(cat=='All'||CAT[cat].includes(k))&&(!q||T[k].n.toLowerCase().includes(q.toLowerCase())));return l.map(k=>`<button data-add="${k}"><span>${T[k].ic}</span>${T[k].n}</button>`).join('')||'<p class="hint">Nothing matches that search.</p>'};
@@ -280,21 +302,22 @@ function paneEdit(){const o=curObj();if(!o)return'<p class="hint" style="padding
  +sec('Animation',`<label>Appears with<select data-c="an">${opt(AN,o.an)}</select></label>${rr('Starts after (s)','data-c="dl"',o.dl||0,0,6,.1)}${rr('Takes (s)','data-c="du"',o.du||.9,.2,3,.1)}<label>Keeps moving with<select data-c="am">${opt(AM,o.am)}</select></label><button data-pv>▶ Preview this slide</button>`)
  +sec('Arrange',`<div class="btns"><button data-op="front">To front</button><button data-op="back">To back</button><button data-op="dup">Duplicate</button><button data-op="lock">${o.lk?'Unlock':'Lock'}</button><button data-op="del">Delete</button></div>`)}
 function paneSlide(){const s=deck.slides[cur],b=s.bg||{t:'theme'};
- const bf=b.t=='solid'?`<label>Colour<input type="color" data-sl="c1" value="${b.c1}"></label>`:b.t=='grad'?`<div class="g4"><label>Colour 1<input type="color" data-sl="c1" value="${b.c1}"></label><label>Colour 2<input type="color" data-sl="c2" value="${b.c2}"></label></div>${rr('Angle','data-sl="ang"',b.ang??135,0,360,5)}`:b.t=='img'?`<label>Picture link<input data-sl="src" value="${(b.src||'').startsWith('data:')?'(uploaded image)':esc(b.src||'')}" placeholder="https://…"></label><label>Or upload<input type="file" accept="image/*" data-slup></label>${rr('Darken','data-sl="dim"',b.dim??40,0,90,5)}`:'';
+ const bf=b.t=='solid'?`<label>Colour${cin('data-sl="c1"',b.c1)}</label>`:b.t=='grad'?`<div class="g4"><label>Colour 1${cin('data-sl="c1"',b.c1)}</label><label>Colour 2${cin('data-sl="c2"',b.c2)}</label></div>${rr('Angle','data-sl="ang"',b.ang??135,0,360,5)}`:b.t=='img'?`<label>Picture link<input data-sl="src" value="${(b.src||'').startsWith('data:')?'(uploaded image)':esc(b.src||'')}" placeholder="https://…"></label><label>Or upload<input type="file" accept="image/*" data-slup></label>${rr('Darken','data-sl="dim"',b.dim??40,0,90,5)}`:'';
  const lay=[...s.objs].reverse().map(o=>`<div class="dr ly${o.id==sel?' cur':''}" data-ly="${o.id}"><span>${T[o.type].ic} ${esc(lbl(o))}${o.lk?' 🔒':''}</span><button data-lu="${o.id}" title="Move forward">↑</button><button data-ld="${o.id}" title="Move back">↓</button></div>`).join('')||'<p class="hint">No objects on this slide yet.</p>';
  return sec('Slide background',`<label>Style<select data-sl="bgt"><option value="theme"${b.t=='theme'?' selected':''}>Match theme</option><option value="solid"${b.t=='solid'?' selected':''}>One colour</option><option value="grad"${b.t=='grad'?' selected':''}>Gradient</option><option value="img"${b.t=='img'?' selected':''}>Picture</option></select></label>${bf}<label><span><input type="checkbox" data-sl="orbs" ${s.orbs!==false?'checked':''}> Glow orbs on this slide</span></label>`)
  +sec('Transition & notes',`<label>Slide change<select data-sl="tr">${opt(Object.keys(TRN),s.tr||'fade')}</select></label><button data-trall>Use for every slide</button><label>Speaker notes (press N while presenting)<textarea data-sl="notes" rows="4">${esc(s.notes||'')}</textarea></label>`)
  +sec('Layers (top first)',lay)
  +sec('Add a slide from a layout',`<div class="btns">${Object.keys(LAY).map(k=>`<button data-lay="${k}">${k}</button>`).join('')}</div>`)
  +sec('Sample slides',`<button data-samp>Add 10 sample slides</button>`)}
-function paneDeck(){const th=TH(deck.theme),cr=(k,l)=>`<div class="cr"><label>${l}<input type="color" data-th="${k}" value="${th[k]}"></label><input data-tc="${k}" value="${esc(fmtC(th[k]))}" aria-label="${l} value"></div>`,fo=k=>opt(FL,th[k]);
+function paneDeck(){const th=TH(deck.theme),cr=(k,l)=>`<div class="cr"><label>${l}${cin(`data-th="${k}"`,th[k])}</label><input data-tc="${k}" value="${esc(fmtC(th[k]))}" aria-label="${l} value"></div>`,fo=k=>opt(FL,th[k]);
  return sec('Ready-made designs',`<div class="des">${Object.entries(DES).map(([k,d])=>{const p=PAL[d[0]];return`<button data-des="${k}" style="background:${p[2]};color:${p[3]};font-family:${FF[d[2]]};border-color:${p[0]}">${k}<em><i style="background:${p[0]}"></i><i style="background:${p[1]}"></i></em></button>`}).join('')}</div>`)
  +sec('Colour mode',`<div class="btns">${CM.map(m=>`<button data-cm="${m[0]}" class="${th.cm==m[0]?'on':''}">${m[0]}</button>`).join('')}</div><p class="hint">${CM.find(m=>m[0]==th.cm)[1]}</p>`)
  +sec('Palettes',`<div class="pal">${Object.entries(PAL).map(([k,p])=>`<button data-pre="${k}"><i style="background:${p[2]}"></i><i style="background:${p[0]}"></i><i style="background:${p[1]}"></i><i style="background:${p[3]}"></i><span>${k}</span></button>`).join('')}</div>${mine().length?'<h4>My palettes</h4>'+mine().map((m,i)=>`<div class="dr"><span>${esc(m.n)}</span><button data-mp="${i}">Use</button><button data-md="${i}">✕</button></div>`).join(''):''}`)
  +sec('Custom colours',`<label>Show values as<select id="cf">${opt(['HEX','RGB','HSL'],CF)}</select></label>${cr('a1','Accent 1')}${cr('a2','Accent 2')}${cr('bg','Background')}${cr('ink','Text')}<p class="hint">Type any colour (name, #hex, rgb(), hsl()) and press Enter.</p><button data-sp>Save as my palette</button>`)
  +sec('Fonts & orbs',`<label>Heading font<select data-th="fh">${fo('fh')}</select></label><label>Body font<select data-th="fb">${fo('fb')}</select></label><label><span><input type="checkbox" data-th="orbs" ${th.orbs?'checked':''}> Glow orbs behind slides</span></label>`)
  +sec('Copy as CSS',`<code>linear-gradient(90deg, ${esc(fmtC(th.a1))}, ${esc(fmtC(th.a2))})</code><button data-cp>Copy CSS</button>`)}
-function pane(){const P=$('#pane');P.innerHTML=tab=='add'?paneAdd():tab=='edit'?paneEdit():tab=='slide'?paneSlide():paneDeck()}
+const HINT={add:'<b>Step 1.</b> Tap anything below to add it to this slide.',edit:'<b>Step 2.</b> Change the selected object: its text, colours, size, shadow and animation.',slide:'Settings for <b>this slide only</b>: background, transition, notes and layouts.',deck:'Settings for the <b>whole deck</b>. Tap a ready-made design for a one-tap makeover.'};
+function pane(){const P=$('#pane');P.innerHTML=`<div class="tabhint">${HINT[tab]}</div>`+(tab=='add'?paneAdd():tab=='edit'?paneEdit():tab=='slide'?paneSlide():paneDeck())}
 $('#pane').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.s)d.open?closed.delete(d.dataset.s):closed.add(d.dataset.s)},true);
 $('#pane').addEventListener('input',e=>{const t=e.target;
  if(t.id=='sq'){q=t.value;$('#lib').innerHTML=libHTML();return}
@@ -318,7 +341,7 @@ $('#pane').addEventListener('change',e=>{const t=e.target;
 function shrink(f){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const png=/png|gif|svg/.test(f.type),m=png?800:1100,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL(png?'image/png':'image/jpeg',.74))};i.src=r.result};r.readAsDataURL(f)})}
 
 /* ---------- object actions ---------- */
-function addObj(k){snap(true);const o=mk(k),n=deck.slides[cur].objs.length%6;o.x=Math.round((1280-o.w)/2)+n*22;o.y=Math.round((720-o.h)/2)+n*22;if(k=='ticker'||k=='orb'){o.x=Math.max(0,o.x-n*22);o.y=o.y-n*22}deck.slides[cur].objs.push(o);render();select(o.id);changed()}
+function addObj(k){snap(true);const o=mk(k),n=deck.slides[cur].objs.length%6;o.x=Math.round((1280-o.w)/2)+n*22;o.y=Math.round((720-o.h)/2)+n*22;if(k=='ticker'||k=='orb'){o.x=Math.max(0,o.x-n*22);o.y=o.y-n*22}deck.slides[cur].objs.push(o);render();select(o.id);changed();const el=$('#fr [data-id="'+o.id+'"]');if(el){el.classList.add('ins');el.addEventListener('animationend',()=>el.classList.remove('ins'),{once:true})}toast('Added “'+T[k].n+'”. Drag it into place or fine-tune it in Format.')}
 function dupObj(){const o=curObj();if(!o)return;snap(true);const c=JSON.parse(JSON.stringify(o));c.id=uid();c.x+=30;c.y+=30;deck.slides[cur].objs.push(c);render();select(c.id);changed()}
 function delObj(){if(!sel)return;snap(true);deck.slides[cur].objs=deck.slides[cur].objs.filter(o=>o.id!=sel);sel=null;render();select(null);changed()}
 function doOp(op){const o=curObj();if(!o)return;const a=deck.slides[cur].objs,i=a.indexOf(o);
@@ -330,7 +353,7 @@ function setAl(a){const o=curObj();if(!o)return;snap(true);o.ts=o.ts||{};o.ts.al
 function alignTo(a){const o=curObj();if(!o)return;snap(true);if(a=='l')o.x=40;if(a=='c')o.x=Math.round((1280-o.w)/2);if(a=='r')o.x=1280-o.w-40;if(a=='t')o.y=40;if(a=='m')o.y=Math.round((720-o.h)/2);if(a=='b')o.y=720-o.h-40;redraw(o);changed();pane()}
 function move(id,d){const a=deck.slides[cur].objs,i=a.findIndex(o=>o.id==id),j=i+d;if(i<0||j<0||j>=a.length)return;snap(true);[a[i],a[j]]=[a[j],a[i]];render();changed();pane()}
 $('#qa').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.q;if(b.dataset.al)setAl(b.dataset.al);else if(['b','i','u'].includes(k))tgl(k);else if(k)doOp(k)});
-$('#pane').addEventListener('click',e=>{const ly=e.target.closest('[data-ly]');if(ly&&!e.target.closest('button')){select(ly.dataset.ly);return}
+$('#pane').addEventListener('click',async e=>{const ly=e.target.closest('[data-ly]');if(ly&&!e.target.closest('button')){select(ly.dataset.ly);return}
  const b=e.target.closest('button');if(!b)return;const d=b.dataset;
  if(d.add)addObj(d.add);
  else if(d.cat){cat=d.cat;pane()}
@@ -344,7 +367,7 @@ $('#pane').addEventListener('click',e=>{const ly=e.target.closest('[data-ly]');i
  else if(d.des){snap(true);const x=DES[d.des];Object.assign(deck.theme,pal(PAL[x[0]]),{cm:x[1],fh:x[2],fb:x[3],orbs:!!x[4]});full();changed(true)}
  else if(d.lay){snap(true);deck.slides.splice(cur+1,0,{objs:LAY[d.lay](),tr:'fade'});go(cur+1);changed()}
  else if(d.samp!==undefined){snap(true);['Title','Agenda','Two cards','Big stats','Chart + text','Timeline','Quote','Pros & cons','Compare table','Thank you'].forEach((n,i)=>deck.slides.splice(cur+1+i,0,{objs:LAY[n](),tr:'fade'}));go(cur+1);changed()}
- else if(d.sp!==undefined){const n=prompt('Name this palette');if(!n)return;const t=TH(deck.theme),a=mine();a.push({n:n.slice(0,30),p:[t.a1,t.a2,t.bg,t.ink]});setMine(a);pane()}
+ else if(d.sp!==undefined){const n=await ask('Give this palette a name so you can reuse it later.',{title:'Save palette',input:'My palette',ok:'Save'});if(!n)return;const t=TH(deck.theme),a=mine();a.push({n:n.slice(0,30),p:[t.a1,t.a2,t.bg,t.ink]});setMine(a);pane()}
  else if(d.mp!==undefined){snap(true);Object.assign(deck.theme,pal(mine()[d.mp].p));full();changed(true)}
  else if(d.md!==undefined){const a=mine();a.splice(+d.md,1);setMine(a);pane()}
  else if(d.cp!==undefined){const t=TH(deck.theme),s=`linear-gradient(90deg, ${fmtC(t.a1)}, ${fmtC(t.a2)})`;navigator.clipboard?.writeText(s).then(()=>stat('Copied'),()=>stat(s))}
@@ -394,7 +417,7 @@ $('#thumbs').addEventListener('dragover',e=>{if(dragI!==null)e.preventDefault()}
 $('#thumbs').addEventListener('drop',e=>{const t=e.target.closest('.th');if(dragI===null||!t)return;e.preventDefault();const to=+t.dataset.i;if(to!==dragI){snap(true);const[s]=deck.slides.splice(dragI,1);deck.slides.splice(to,0,s);cur=to;full();changed(true)}dragI=null});
 $('#as').onclick=()=>{snap(true);deck.slides.splice(cur+1,0,{objs:[],tr:'fade'});go(cur+1);changed()};
 $('#ds').onclick=()=>{snap(true);const c=JSON.parse(JSON.stringify(deck.slides[cur]));c.objs.forEach(o=>o.id=uid());deck.slides.splice(cur+1,0,c);go(cur+1);changed()};
-$('#rs').onclick=()=>{if(deck.slides.length<2||!confirm('Delete this slide?'))return;snap(true);deck.slides.splice(cur,1);go(Math.min(cur,deck.slides.length-1));changed()};
+$('#rs').onclick=async()=>{if(deck.slides.length<2){toast('A deck needs at least one slide.');return}if(!await ask('Slide '+(cur+1)+' and everything on it will be removed. You can bring it back with Undo.',{title:'Delete this slide?',ok:'Delete slide',danger:1}))return;snap(true);deck.slides.splice(cur,1);go(Math.min(cur,deck.slides.length-1));changed()};
 const mv=d=>{const j=cur+d;if(j<0||j>=deck.slides.length)return;snap(true);[deck.slides[cur],deck.slides[j]]=[deck.slides[j],deck.slides[cur]];cur=j;full();changed(true)};
 $('#ms').onclick=()=>mv(-1);$('#mn').onclick=()=>mv(1);
 function play(){const e=$('#fr .sl');if(!e)return;e.classList.remove('on');e.classList.add('pm');void e.offsetWidth;e.classList.add('on')}
@@ -403,16 +426,18 @@ $('#zo').onclick=()=>{Z=Math.max(.5,Z/1.25);render()};$('#zi').onclick=()=>{Z=Ma
 $('#sn').onclick=()=>{SNAP=!SNAP;$('#sn').classList.toggle('on',SNAP);$('#sn').textContent=SNAP?'Snap on':'Snap off'};
 
 /* ---------- present ---------- */
-function present(){pi=cur;$('#pres').hidden=false;document.documentElement.requestFullscreen?.().catch(()=>{});pshow()}
+let fsOn=false;
+function present(){pi=cur;$('#pres').hidden=false;try{document.documentElement.requestFullscreen?.().then(()=>{fsOn=true}).catch(()=>{})}catch{}pshow()}
 function pshow(){const p=$('#pres'),s=Math.min(innerWidth/1280,innerHeight/720),sl=deck.slides[pi],n=deck.slides.length;
  p.innerHTML=`<div class="pw" style="--trn:${TRN[sl.tr||'fade']||'trfade'}">${slideHTML(sl,deck.theme,'pm')}</div>`;
  const e=p.querySelector('.sl');e.style.cssText+=`;transform:scale(${s});left:${(innerWidth-1280*s)/2}px;top:${(innerHeight-720*s)/2}px`;void e.offsetWidth;e.classList.add('on');
  p.insertAdjacentHTML('beforeend',`<div class="pc">${pi+1} / ${n} · Esc to exit</div><div class="pg" style="width:${(pi+1)/n*100}%"></div>${notesOn&&sl.notes?`<div class="pn">${nl(sl.notes)}</div>`:''}`)}
 const pgo=d=>{const j=pi+d;if(j<0)return;if(j>=deck.slides.length){endP();return}pi=j;pshow()};
-function endP(){$('#pres').hidden=true;if(document.fullscreenElement)document.exitFullscreen()}
+let fsIgnore=0;
+function endP(){fsOn=false;fsIgnore=Date.now()+900;$('#pres').hidden=true;if(document.fullscreenElement)document.exitFullscreen()}
 $('#pr').onclick=present;
 $('#pres').onclick=e=>pgo(e.clientX>innerWidth*.3?1:-1);
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&!$('#pres').hidden)endP()});
+document.addEventListener('fullscreenchange',()=>{if(Date.now()<fsIgnore)return;if(document.fullscreenElement)fsOn=true;else if(fsOn){fsOn=false;if(!$('#pres').hidden)endP()}});
 addEventListener('resize',()=>{if(!$('#pres').hidden)pshow();else render()});
 
 /* ---------- decks, help, tip ---------- */
@@ -424,15 +449,56 @@ async function showDecks(){const m=$('#modal');m.hidden=false;m.innerHTML='<div 
 $('#modal').onclick=async e=>{const b=e.target.closest('button');if(e.target.id=='modal'||(b&&b.dataset.x!==undefined)){$('#modal').hidden=true;return}if(!b)return;
  try{if(b.dataset.o){await openDeck(b.dataset.o);$('#modal').hidden=true}
  else if(b.dataset.n!==undefined){await newDeck();$('#modal').hidden=true}
- else if(b.dataset.d&&confirm('Delete this deck for good?')){await api('decks/'+b.dataset.d,'DELETE');if(b.dataset.d==id){id=null;deck=starter();full();changed(true)}showDecks()}}catch(x){stat(x.message)}};
+ else if(b.dataset.tour!==undefined){$('#modal').hidden=true;tour(0)}
+ else if(b.dataset.d){const nm=b.closest('.dr').querySelector('span').firstChild.textContent;if(await ask('“'+nm+'” will be deleted for good. This cannot be undone.',{title:'Delete this deck?',ok:'Delete deck',danger:1})){await api('decks/'+b.dataset.d,'DELETE');if(b.dataset.d==id){id=null;deck=starter();full();changed(true)}showDecks()}}}catch(x){stat(x.message)}};
 $('#dk').onclick=showDecks;$('#nw').onclick=newDeck;
-$('#hp').onclick=()=>{const m=$('#modal');m.hidden=false;m.innerHTML=`<div class="mb"><h3>Quick help</h3><p><b>Insert</b> adds things · <b>Format</b> changes the selected thing · <b>Slide</b> sets the background, transition and notes · <b>Design</b> changes colours, fonts and the overall look.</p><p>Drag to move · pull the corner to resize · pull the round dot on top to rotate (Shift = 15° steps) · double-click text to type.</p><p>Hold <b>Shift</b> while resizing to keep proportions. Hold <b>Alt</b> while dragging to turn snapping off.</p><p><b>Keys:</b> Ctrl+Z undo · Ctrl+Shift+Z redo · Ctrl+C / X / V copy, cut, paste · Ctrl+D duplicate · Delete · arrows nudge (Shift = 10) · F5 present · N notes while presenting · Esc deselect.</p><p>Everything saves to your account automatically.</p><button data-x>Got it</button></div>`};
+$('#hp').onclick=()=>{const m=$('#modal');m.hidden=false;m.innerHTML=`<div class="mb"><h3>How this works</h3><ol style="padding-left:20px;display:grid;gap:6px;line-height:1.5"><li><b>Insert</b> (right panel): tap anything to add it to the slide.</li><li><b>Move it:</b> drag it. Pull the square corner to resize, the round dot to rotate. Double-click text to type.</li><li><b>Format</b>: with something selected, change its colours, text, shadow and animation.</li><li><b>Slide</b>: this slide's background, transition and notes. <b>Design</b>: colours and fonts for the whole deck.</li><li><b>Present ▶</b> plays it full screen. Everything saves to your account by itself.</li></ol><p style="color:var(--mu);font-size:12px">Shortcuts: Ctrl+Z undo · Ctrl+Shift+Z redo · Ctrl+C / X / V copy, cut, paste · Ctrl+D duplicate · Delete · arrows nudge (Shift = 10) · Shift while resizing keeps proportions · Alt while dragging turns snapping off · F5 present · N notes while presenting.</p><div class="btns"><button data-tour class="on">Take the 1-minute tour</button><button data-x>Close</button></div></div>`};
 const tipOK=()=>{try{return localStorage.getItem('ppt_seen')}catch{return 1}};
-if(!tipOK()){const t=$('#tip');t.hidden=false;t.innerHTML='<span><b>Welcome!</b> 1) Open <b>Insert</b> and tap an object. 2) Drag it, pull its corner, double-click text. 3) Try the <b>Design</b> tab for one-tap looks.</span><button id="tk">Got it</button>';$('#tk').onclick=()=>{t.hidden=true;try{localStorage.setItem('ppt_seen','1')}catch{};render()}}
+if(!tipOK()){const t=$('#tip');t.hidden=false;t.innerHTML='<span><b>Welcome!</b> New here? Take a quick tour of how everything works.</span><span class="btns"><button id="tk" class="on">Start the tour</button><button id="ts">Skip</button></span>';const seen=()=>{t.hidden=true;try{localStorage.setItem('ppt_seen','1')}catch{};render()};$('#tk').onclick=()=>{seen();tour(0)};$('#ts').onclick=seen}
+
+/* ---------- in-app dialogs, toast, colour picker and tour (no browser pop-ups) ---------- */
+function ask(msg,o={}){return new Promise(res=>{const m=$('#dlg');m.hidden=false;
+ m.innerHTML=`<div class="mb dlg" role="dialog" aria-modal="true"><h3>${esc(o.title||'Please confirm')}</h3><p>${nl(msg)}</p>${o.input!==undefined?`<input id="dlgi" value="${esc(o.input)}" maxlength="30">`:''}<div class="btns"><button id="dlgc">${o.cancel||'Cancel'}</button><button id="dlgo" class="${o.danger?'dng':'on'}">${o.ok||'OK'}</button></div></div>`;
+ const i=$('#dlgi'),done=v=>{m.hidden=true;m.innerHTML='';m.onclick=m.onkeydown=null;res(v)};
+ $('#dlgc').onclick=()=>done(null);$('#dlgo').onclick=()=>done(i?(i.value.trim()||null):true);
+ m.onclick=e=>{if(e.target===m)done(null)};m.onkeydown=e=>{if(e.key=='Escape')done(null);else if(e.key=='Enter'&&e.target.tagName!='BUTTON'){e.preventDefault();$('#dlgo').click()}};
+ (i||$('#dlgc')).focus();if(i)i.select()})}
+let toT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toT);toT=setTimeout(()=>t.classList.remove('on'),3200)}
+const toHSL=([r,g,b])=>{r/=255;g/=255;b/=255;const M=Math.max(r,g,b),m=Math.min(r,g,b),l=(M+m)/2,d=M-m;let h=0,s=0;if(d){s=d/(1-Math.abs(2*l-1));h=M==r?((g-b)/d)%6:M==g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}return[Math.round(h),Math.round(s*100),Math.round(l*100)]};
+const fromHSL=(h,s,l)=>{s/=100;l/=100;const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));return hex([f(0)*255,f(8)*255,f(4)*255])};
+let cpT=null;
+function openCP(btn){const inp=btn.nextElementSibling;cpT={btn,inp};const th=TH(deck.theme),all=[...new Set([th.a1,th.a2,th.bg,th.ink,'#000000','#ffffff','#808080',...Object.values(PAL).flat()])].slice(0,48),c=rgbOf(inp.value)||[255,255,255],[h,s,l]=toHSL(c),p=$('#cpk');
+ p.innerHTML=`<div class="cpb"><div class="cph"><b>Pick a colour</b><button data-cpx>Done</button></div><div class="cpv"></div><label>Hue<input type="range" id="ch" min="0" max="360" value="${h}"></label><label>Saturation<input type="range" id="cs2" min="0" max="100" value="${s}"></label><label>Lightness<input type="range" id="cl" min="0" max="100" value="${l}"></label><label>Or type a colour (name, #hex, rgb…)<input id="cx" value="${hex(c)}" spellcheck="false"></label><div class="csw">${all.map(x=>`<button data-cc="${x}" style="background:${x}" aria-label="${x}"></button>`).join('')}</div></div>`;
+ p.hidden=false;const r=btn.getBoundingClientRect(),w=Math.min(290,innerWidth-16),box=p.firstElementChild;box.style.width=w+'px';
+ p.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+'px';p.style.top=Math.max(8,Math.min(r.bottom+6,innerHeight-box.offsetHeight-8))+'px';$('#cpk .cpv').style.background=hex(c)}
+function closeCP(){$('#cpk').hidden=true;cpT=null}
+function setCP(x,from){const c=rgbOf(x);if(!c||!cpT)return;x=hex(c);$('#cpk .cpv').style.background=x;cpT.btn.style.background=x;cpT.inp.value=x;cpT.inp.dispatchEvent(new Event('input',{bubbles:true}));
+ if(from!='s'){const[h,s,l]=toHSL(c);$('#ch').value=h;$('#cs2').value=s;$('#cl').value=l}if(from!='t')$('#cx').value=x}
+$('#cpk').addEventListener('input',e=>{const t=e.target;if(['ch','cs2','cl'].includes(t.id))setCP(fromHSL(+$('#ch').value,+$('#cs2').value,+$('#cl').value),'s');else if(t.id=='cx')setCP(t.value,'t')});
+$('#cpk').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.cc)setCP(b.dataset.cc);else if(b.dataset.cpx!==undefined)closeCP()});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-cpb]');if(b){e.preventDefault();openCP(b);return}if(!e.target.closest('#cpk'))closeCP()});
+const TOUR=[
+ {el:'#thumbs',t:'Your slides',x:'Every slide in your deck is listed here. Tap one to open it, drag it to reorder, and use the buttons underneath to add, duplicate or delete slides.'},
+ {el:'#side',t:'Step 1 · Insert',x:'Open the Insert tab and tap anything (a title, card, chart, stepper…) to drop it onto the slide. It pops in so you can see where it landed.',tab:'add'},
+ {el:'#sw',t:'Step 2 · Move it around',x:'Drag an object to move it. Pull the square corner to resize it and the round dot above it to rotate. Double-click any text to type. Pink lines help you line things up.'},
+ {el:'#qa',t:'Quick actions',x:'When something is selected this bar lets you duplicate, delete, lock, reorder or style it with one tap.'},
+ {el:'#side',t:'Step 3 · Format',x:'The Format tab changes the selected object: colours, text, shadow and, importantly, how it animates in when you present.',tab:'edit'},
+ {el:'#side',t:'Slide and Design',x:'Slide sets the background, transition and notes for one slide. Design restyles the whole deck with colours, fonts and ready-made looks.',tab:'deck'},
+ {el:'#pr',t:'Step 4 · Present',x:'Press Present to play your deck full screen with every animation. Arrow keys or taps move between slides and Esc exits. Everything saves automatically.'}];
+let ti=0;
+function tour(i){ti=i;const s=TOUR[i];if(s.tab){tab=s.tab;if(tab=='edit'&&!sel){const o=deck.slides[cur].objs[0];if(o){sel=o.id;markSel()}}tabsUI();pane()}
+ const r=$(s.el).getBoundingClientRect(),W=Math.min(320,innerWidth-20),H=210,m=14;let x,y;
+ if(r.right+W+m<innerWidth){x=r.right+m;y=r.top}else if(r.left-W-m>0){x=r.left-W-m;y=r.top}else if(r.bottom+H+m<innerHeight){x=r.left;y=r.bottom+m}else{x=r.left+10;y=r.top+10}
+ x=Math.max(10,Math.min(x,innerWidth-W-10));y=Math.max(10,Math.min(y,innerHeight-H-10));
+ const b=$('#tour');b.hidden=false;b.innerHTML=`<div class="tsp" style="left:${r.left-6}px;top:${r.top-6}px;width:${r.width+12}px;height:${r.height+12}px"></div><div class="tcard" style="left:${x}px;top:${y}px"><small>${i+1} of ${TOUR.length}</small><h3>${s.t}</h3><p>${s.x}</p><div class="btns">${i?'<button data-tb>Back</button>':''}<button data-tn class="on">${i==TOUR.length-1?'Finish':'Next'}</button><button data-tx>Skip tour</button></div></div>`}
+function tourEnd(){$('#tour').hidden=true;$('#tour').innerHTML='';try{localStorage.setItem('ppt_seen','1')}catch{}}
+$('#tour').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.tn!==undefined){ti>=TOUR.length-1?tourEnd():tour(ti+1)}else if(b.dataset.tb!==undefined)tour(ti-1);else if(b.dataset.tx!==undefined)tourEnd()});
 
 /* ---------- keyboard ---------- */
 addEventListener('keydown',e=>{const k=e.key;
  if(!$('#pres').hidden){if(k=='Escape')endP();else if(k=='n'||k=='N'){notesOn=!notesOn;pshow()}else if([' ','ArrowRight','ArrowDown','PageDown'].includes(k)){e.preventDefault();pgo(1)}else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){e.preventDefault();pgo(-1)}return}
+ if(k=='Escape'&&!$('#cpk').hidden){closeCP();return}if(k=='Escape'&&!$('#tour').hidden){tourEnd();return}
+ if(!$('#dlg').hidden||!$('#modal').hidden||!$('#tour').hidden||!$('#cpk').hidden)return;
  const a=document.activeElement;if(a&&(a.isContentEditable||/INPUT|TEXTAREA|SELECT/.test(a.tagName)))return;
  const o=curObj(),c=e.ctrlKey||e.metaKey,K=k.toLowerCase();
  if(k=='F5'){e.preventDefault();present();return}
@@ -441,7 +507,7 @@ addEventListener('keydown',e=>{const k=e.key;
  if(c&&K=='v'&&clip){e.preventDefault();snap(true);const n=JSON.parse(clip);n.id=uid();n.x+=24;n.y+=24;deck.slides[cur].objs.push(n);render();select(n.id);changed();return}
  if(k=='Escape'){select(null);return}
  if(!o)return;
- if(c&&K=='c'){clip=JSON.stringify(o);stat('Copied');return}
+ if(c&&K=='c'){clip=JSON.stringify(o);toast('Copied. Press Ctrl+V to paste.');return}
  if(c&&K=='x'){clip=JSON.stringify(o);delObj();return}
  if(c&&K=='d'){e.preventDefault();dupObj();return}
  if(k=='Delete'||k=='Backspace'){e.preventDefault();delObj();return}
