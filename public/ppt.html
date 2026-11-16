@@ -70,7 +70,7 @@ background:radial-gradient(900px 500px at 85% 0,color-mix(in srgb,var(--a2) 13%,
 [data-am=spin]{animation:rt 18s linear infinite}[data-am=glow]{animation:gw 2.4s ease-in-out infinite}
 @keyframes fl{50%{transform:translateY(-12px)}}@keyframes pz{50%{transform:scale(1.07)}}@keyframes sw{50%{transform:rotate(4deg)}25%{transform:rotate(-4deg)}}
 @keyframes rt{to{transform:rotate(360deg)}}@keyframes gw{50%{filter:drop-shadow(0 0 22px var(--a1))}}
-.pm .ob:not([data-an=none]){opacity:0}
+/* entrance effects start hidden through animation fill-mode (backwards), not a static opacity:0 */
 .on .ob:not([data-an=none]){animation:var(--an) var(--du,.9s) cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
 [data-an=rise]{--an:rise}[data-an=fade]{--an:fade}[data-an=zoom]{--an:zoomin}[data-an=left]{--an:lft}[data-an=right]{--an:rgt}[data-an=drop]{--an:drop}[data-an=blur]{--an:blr}[data-an=spin]{--an:spn}[data-an=flip]{--an:flipin}[data-an=bounce]{--an:bnc}[data-an=wipe]{--an:wp}
 @keyframes flipin{from{opacity:0;transform:perspective(800px) rotateX(80deg)}}@keyframes bnc{0%{opacity:0;transform:translateY(-200px)}60%{opacity:1;transform:translateY(20px)}80%{transform:translateY(-8px)}}@keyframes wp{from{clip-path:inset(0 100% 0 0)}}
