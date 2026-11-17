@@ -7,4 +7,5 @@ Deploy: `npx wrangler deploy`  (Cloudflare Workers & Pages -> Import a repositor
 
 Import HTML decks: in Advanced PPT press "Import HTML" (or drag an .html file onto the page). The file runs in a sandboxed frame so its own scripts, animations and styles work exactly as built; text edits it saves are stored in your account.
 
-Desktop: double-click an icon or file to open it. Advanced PPT opens in a window (maximize/restore with the □ button). Your saved decks appear as file icons; double-click one to open it. Drag a .html presentation onto the desktop (or use IMPORT HTML) to import it.
+Desktop: double-click an icon to open it. Drag icons anywhere, or onto a folder. Right-click the desktop for New > Folder / Text file and Open in Terminal; right-click an icon for Open / Rename / Delete (F2 and Del also work). Text files open in Notepad. Layout is saved per account in the D1 `desktops` table (created automatically).
+Decks are kept inside Advanced PPT (My decks). Use its 'To desktop' button to put a shortcut on the desktop. Drag a .html presentation onto the desktop (or use IMPORT HTML) to import it.

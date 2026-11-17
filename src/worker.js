@@ -34,6 +34,7 @@ async function ensureSchema(env) {
     env.DB.prepare('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE COLLATE NOCASE, salt TEXT NOT NULL, hash TEXT NOT NULL, created INTEGER NOT NULL, notes TEXT NOT NULL DEFAULT \'\')'),
     env.DB.prepare('CREATE TABLE IF NOT EXISTS decks (id TEXT PRIMARY KEY, user_id INTEGER NOT NULL, title TEXT NOT NULL, data TEXT NOT NULL, updated INTEGER NOT NULL)'),
     env.DB.prepare('CREATE INDEX IF NOT EXISTS decks_user ON decks(user_id)'),
+    env.DB.prepare('CREATE TABLE IF NOT EXISTS desktops (user_id INTEGER PRIMARY KEY, data TEXT NOT NULL, updated INTEGER NOT NULL)'),
     env.DB.prepare('CREATE TABLE IF NOT EXISTS sessions (token TEXT PRIMARY KEY, user_id INTEGER NOT NULL, expires INTEGER NOT NULL)'),
   ]);
   ready = true;
@@ -89,6 +90,21 @@ async function handle(request, env) {
     if (route === 'notes' && method === 'PUT') {
       const n = String(body.notes || '').slice(0, 20000);
       await env.DB.prepare('UPDATE users SET notes = ? WHERE id = ?').bind(n, user.id).run();
+      return json({ ok: true });
+    }
+
+    // ---- Desktop: icons, folders and text files for the logged-in user ----
+    if (route === 'desktop' && method === 'GET') {
+      const r = await env.DB.prepare('SELECT data FROM desktops WHERE user_id = ?').bind(user.id).first();
+      let d = null; try { d = r ? JSON.parse(r.data) : null; } catch {}
+      return json({ desktop: d });
+    }
+    if (route === 'desktop' && method === 'PUT') {
+      const d = body.desktop;
+      if (!d || typeof d !== 'object' || !Array.isArray(d.items)) return json({ error: 'BAD DESKTOP' }, 400);
+      const str = JSON.stringify(d);
+      if (str.length > 1500000) return json({ error: 'DESKTOP TOO LARGE (1.5 MB MAX)' }, 400);
+      await env.DB.prepare('INSERT INTO desktops(user_id, data, updated) VALUES(?,?,?) ON CONFLICT(user_id) DO UPDATE SET data = excluded.data, updated = excluded.updated').bind(user.id, str, Date.now()).run();
       return json({ ok: true });
     }
 
