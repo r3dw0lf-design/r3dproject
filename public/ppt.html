@@ -51,7 +51,7 @@ details{border:1px solid var(--ln);border-radius:10px;background:#ffffff05}summa
 .rr{display:flex;gap:8px;align-items:center}.rr input{flex:1;padding:0;border:0;background:none;accent-color:#ffc45c}.rr output{width:36px;text-align:right;font-size:12px}
 .fin{animation:fin .28s ease}@keyframes fin{from{opacity:.25;transform:scale(.985)}}
 .ly{cursor:pointer;border-radius:6px;padding-left:4px}.ly.cur{background:#ffc45c1c}.th{transition:border-color .15s,transform .15s}.th:hover{transform:translateY(-1px)}
-.pw{position:absolute;inset:0;animation:var(--trn,none) .6s ease both}
+.pw{position:absolute;inset:0;animation:var(--trn,none) 1.1s cubic-bezier(.22,1,.36,1) both}
 @keyframes trfade{from{opacity:0}}@keyframes trslide{from{transform:translateX(7%);opacity:0}}@keyframes trzoom{from{transform:scale(.88);opacity:0}}@keyframes trflip{from{transform:perspective(1400px) rotateY(55deg);opacity:0}}@keyframes trwipe{from{clip-path:inset(0 100% 0 0)}}
 .pn{position:fixed;left:0;right:0;bottom:0;background:#000c;color:#fff;padding:14px 24px 30px;font-size:20px;z-index:4}.pg{position:fixed;left:0;bottom:0;height:3px;background:var(--g);transition:width .4s;z-index:5}
 
@@ -84,7 +84,7 @@ background:radial-gradient(900px 500px at 85% 0,color-mix(in srgb,var(--a2) 13%,
 @keyframes fl{50%{transform:translateY(-12px)}}@keyframes pz{50%{transform:scale(1.07)}}@keyframes sw{50%{transform:rotate(4deg)}25%{transform:rotate(-4deg)}}
 @keyframes rt{to{transform:rotate(360deg)}}@keyframes gw{50%{filter:drop-shadow(0 0 22px var(--a1))}}
 /* entrance effects start hidden through animation fill-mode (backwards), not a static opacity:0 */
-.on .ob:not([data-an=none]){animation:var(--an) var(--du,.9s) cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
+.on .ob:not([data-an=none]){animation:var(--an) var(--du,.9s) var(--ez,cubic-bezier(.22,1,.36,1)) both;animation-delay:var(--d)}
 [data-an=rise]{--an:rise}[data-an=fade]{--an:fade}[data-an=zoom]{--an:zoomin}[data-an=left]{--an:lft}[data-an=right]{--an:rgt}[data-an=drop]{--an:drop}[data-an=blur]{--an:blr}[data-an=spin]{--an:spn}[data-an=flip]{--an:flipin}[data-an=bounce]{--an:bnc}[data-an=wipe]{--an:wp}
 @keyframes flipin{from{opacity:0;transform:perspective(800px) rotateX(80deg)}}@keyframes bnc{0%{opacity:0;transform:translateY(-200px)}60%{opacity:1;transform:translateY(20px)}80%{transform:translateY(-8px)}}@keyframes wp{from{clip-path:inset(0 100% 0 0)}}
 @keyframes rise{from{opacity:0;transform:translateY(40px)}}@keyframes fade{from{opacity:0}}@keyframes zoomin{from{opacity:0;transform:scale(.5)}}
@@ -138,7 +138,7 @@ background:linear-gradient(color-mix(in srgb,var(--bg) 90%,var(--ink)),color-mix
 .dv{width:100%;height:100%;background:repeating-linear-gradient(90deg,var(--a1) 0 14px,transparent 14px 26px);animation:dash 1.2s linear infinite}.dv.v{background:repeating-linear-gradient(180deg,var(--a1) 0 14px,transparent 14px 26px);animation-name:dashv}@keyframes dashv{to{background-position:0 26px}}
 .rg{width:100%;height:100%;border-radius:50%;border:6px solid color-mix(in srgb,var(--a1) 20%,transparent);border-top-color:var(--a1);animation:rt 1.2s linear infinite;box-shadow:0 0 30px color-mix(in srgb,var(--a1) 40%,transparent)}
 .bars{display:flex;align-items:stretch;gap:16px;height:100%}.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}.bar{flex:1;display:flex;align-items:flex-end;width:100%}
-.bar i{display:block;width:100%;height:var(--h);border-radius:10px 10px 0 0;background:linear-gradient(var(--a1),var(--a2));box-shadow:0 0 24px color-mix(in srgb,var(--a1) 40%,transparent);animation:grh 1.2s .5s both}@keyframes grh{from{height:0}}
+.bar i{display:block;width:100%;height:var(--h);border-radius:10px 10px 0 0;background:linear-gradient(var(--a1),var(--a2));box-shadow:0 0 24px color-mix(in srgb,var(--a1) 40%,transparent);}@keyframes grh{from{height:0}}
 .bc span{text-align:center;color:var(--mut);font-weight:700;line-height:1.2}.bc b{color:var(--a1)}
 .ph{height:100%;display:grid;place-items:center;text-align:center;border:2px dashed color-mix(in srgb,var(--ink) 30%,transparent);border-radius:14px;color:var(--mut);font-size:18px}
 .bdg{display:inline-block;padding:8px 22px;border-radius:99px;border:1px solid var(--a1);color:var(--a1);font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:color-mix(in srgb,var(--a1) 10%,transparent);box-shadow:0 0 22px color-mix(in srgb,var(--a1) 35%,transparent)}
@@ -154,6 +154,184 @@ background:linear-gradient(color-mix(in srgb,var(--bg) 90%,var(--ink)),color-mix
 .sl[data-cm=soft]{filter:saturate(.6) brightness(1.08)}
 .sl[data-cm=light],.sl[data-cm=light] img{filter:invert(1) hue-rotate(180deg)}.sl[data-cm=light] img{filter:none}
 .sl[data-cm=mono]{filter:grayscale(1)}.sl[data-cm=vintage]{filter:sepia(.55) saturate(1.25) contrast(1.05)}.sl[data-cm=vivid]{filter:contrast(1.18) saturate(1.45)}
+
+/* ===== extra entrance effects ===== */
+[data-an=pop]{--an:x_pop}@keyframes x_pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.18)}100%{transform:scale(1)}}
+[data-an=elastic]{--an:x_elastic}@keyframes x_elastic{0%{opacity:0;transform:scale(.3,1.6)}40%{opacity:1;transform:scale(1.25,.75)}60%{transform:scale(.9,1.1)}80%{transform:scale(1.05,.95)}100%{transform:scale(1)}}
+[data-an=jelly]{--an:x_jelly}@keyframes x_jelly{0%{opacity:0;transform:scale(0)}30%{opacity:1;transform:scale(1.25,.75)}40%{transform:scale(.75,1.25)}50%{transform:scale(1.15,.85)}65%{transform:scale(.95,1.05)}75%{transform:scale(1.05,.95)}100%{transform:scale(1)}}
+[data-an=tada]{--an:x_tada}@keyframes x_tada{0%{opacity:0;transform:scale(.2) rotate(-12deg)}20%{opacity:1;transform:scale(1.2) rotate(-6deg)}35%{transform:scale(1.2) rotate(6deg)}50%{transform:scale(1.2) rotate(-6deg)}65%{transform:scale(1.2) rotate(6deg)}80%{transform:scale(1.1) rotate(-3deg)}100%{transform:scale(1)}}
+[data-an=flipy]{--an:x_flipy}@keyframes x_flipy{from{opacity:0;transform:perspective(800px) rotateY(90deg)}60%{transform:perspective(800px) rotateY(-12deg)}}
+[data-an=swingin]{--an:x_swingin}@keyframes x_swingin{from{opacity:0;transform:perspective(800px) rotateX(-90deg);transform-origin:top}60%{transform:perspective(800px) rotateX(15deg);transform-origin:top}to{transform-origin:top}}
+[data-an=zoomout]{--an:x_zoomout}@keyframes x_zoomout{from{opacity:0;transform:scale(2.2)}}
+[data-an=skew]{--an:x_skew}@keyframes x_skew{from{opacity:0;transform:translateX(-110px) skewX(35deg)}}
+[data-an=roll]{--an:x_roll}@keyframes x_roll{from{opacity:0;transform:translateX(-300px) rotate(-540deg)}}
+[data-an=unfold]{--an:x_unfold}@keyframes x_unfold{from{opacity:0;transform:scaleY(0);transform-origin:top}to{transform-origin:top}}
+[data-an=curtain]{--an:x_curtain}@keyframes x_curtain{from{clip-path:inset(0 50% 0 50%)}}
+[data-an=iris]{--an:x_iris}@keyframes x_iris{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(80% at 50% 50%)}}
+[data-an=glitch]{--an:x_glitch}@keyframes x_glitch{0%{opacity:0;transform:translateX(-30px) skewX(20deg)}15%{opacity:1;transform:translateX(24px) skewX(-18deg);filter:hue-rotate(90deg)}30%{opacity:.3;transform:translateX(-14px)}45%{opacity:1;transform:translateX(10px) skewX(8deg);filter:hue-rotate(-90deg)}60%{opacity:.5;transform:translateX(-6px)}80%{opacity:1;transform:translateX(3px)}100%{transform:none;filter:none}}
+[data-an=flicker]{--an:x_flicker}@keyframes x_flicker{0%{opacity:0}10%{opacity:1}20%{opacity:.1}30%{opacity:.9}40%{opacity:.2}55%{opacity:1}65%{opacity:.4}80%{opacity:1}100%{opacity:1}}
+[data-an=spiral]{--an:x_spiral}@keyframes x_spiral{from{opacity:0;transform:rotate(720deg) scale(0)}}
+[data-an=lightspeed]{--an:x_lightspeed}@keyframes x_lightspeed{from{opacity:0;transform:translateX(260px) skewX(-35deg)}60%{opacity:1;transform:skewX(18deg)}80%{transform:skewX(-6deg)}}
+[data-an=slideup]{--an:x_slideup}@keyframes x_slideup{from{opacity:0;transform:translateY(320px)}}
+[data-an=slidedown]{--an:x_slidedown}@keyframes x_slidedown{from{opacity:0;transform:translateY(-320px)}}
+[data-an=tilt]{--an:x_tilt}@keyframes x_tilt{from{opacity:0;transform:perspective(900px) rotateX(-70deg) rotateY(40deg) translateY(60px)}}
+[data-an=stretch]{--an:x_stretch}@keyframes x_stretch{from{opacity:0;transform:scaleX(0)}}
+[data-an=focus]{--an:x_focus}@keyframes x_focus{from{opacity:0;filter:blur(40px);transform:scale(1.5)}}
+[data-an=rubber]{--an:x_rubber}@keyframes x_rubber{0%{opacity:0;transform:scale(1)}30%{opacity:1;transform:scale(1.25,.75)}40%{transform:scale(.75,1.25)}50%{transform:scale(1.15,.85)}65%{transform:scale(.95,1.05)}75%{transform:scale(1.05,.95)}100%{transform:scale(1)}}
+[data-an=wipedown]{--an:x_wipedown}@keyframes x_wipedown{from{clip-path:inset(0 0 100% 0)}}
+[data-an=wipeleft]{--an:x_wipeleft}@keyframes x_wipeleft{from{clip-path:inset(0 0 0 100%)}}
+[data-an=wipeup]{--an:x_wipeup}@keyframes x_wipeup{from{clip-path:inset(100% 0 0 0)}}
+[data-an=blinds]{--an:x_blinds}@keyframes x_blinds{0%{clip-path:polygon(0 0,100% 0,100% 0,0 0)}100%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}}
+[data-an=peek]{--an:x_peek}@keyframes x_peek{from{opacity:0;transform:translateY(80px) scale(.8);clip-path:inset(100% 0 0 0)}}
+[data-an=whirl]{--an:x_whirl}@keyframes x_whirl{from{opacity:0;transform:rotate(-90deg) scale(.2) translateX(-200px)}}
+[data-an=drift]{--an:x_drift}@keyframes x_drift{from{opacity:0;transform:translate(-80px,60px) rotate(-8deg)}}
+[data-an=dropbounce]{--an:x_dropbounce}@keyframes x_dropbounce{0%{opacity:0;transform:translateY(-400px)}50%{opacity:1;transform:translateY(0)}65%{transform:translateY(-60px)}80%{transform:translateY(0)}90%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+/* ===== extra continuous motions ===== */
+[data-am=bounce]{animation:m_bounce 2.38s ease-in-out infinite}@keyframes m_bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
+[data-am=shake]{animation:m_shake 2.72s ease-in-out infinite}@keyframes m_shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+[data-am=wobble]{animation:m_wobble 4.08s ease-in-out infinite}@keyframes m_wobble{0%,100%{transform:rotate(0)}25%{transform:translateX(-10px) rotate(-5deg)}75%{transform:translateX(10px) rotate(5deg)}}
+[data-am=tilt]{animation:m_tilt 6.8s ease-in-out infinite}@keyframes m_tilt{0%,100%{transform:perspective(700px) rotateY(-14deg)}50%{transform:perspective(700px) rotateY(14deg)}}
+[data-am=heartbeat]{animation:m_heartbeat 2.72s ease-in-out infinite}@keyframes m_heartbeat{0%,40%,80%,100%{transform:scale(1)}20%,60%{transform:scale(1.14)}}
+[data-am=flicker]{animation:m_flicker 5.1s ease-in-out infinite}@keyframes m_flicker{0%,100%{opacity:1}45%{opacity:1}50%{opacity:.35}55%{opacity:1}70%{opacity:.6}75%{opacity:1}}
+[data-am=hue]{animation:m_hue 13.6s linear infinite}@keyframes m_hue{to{filter:hue-rotate(360deg)}}
+[data-am=jelly]{animation:m_jelly 3.74s ease-in-out infinite}@keyframes m_jelly{0%,100%{transform:scale(1)}25%{transform:scale(1.1,.9)}50%{transform:scale(.92,1.08)}75%{transform:scale(1.04,.96)}}
+[data-am=orbit]{animation:m_orbit 8.5s linear infinite}@keyframes m_orbit{from{transform:rotate(0) translateX(16px) rotate(0)}to{transform:rotate(360deg) translateX(16px) rotate(-360deg)}}
+[data-am=breathe]{animation:m_breathe 5.78s ease-in-out infinite}@keyframes m_breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.8}}
+[data-am=sway]{animation:m_sway 6.12s ease-in-out infinite}@keyframes m_sway{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+[data-am=rubber]{animation:m_rubber 4.08s ease-in-out infinite}@keyframes m_rubber{0%,100%{transform:scale(1)}30%{transform:scale(1.2,.8)}50%{transform:scale(.85,1.15)}70%{transform:scale(1.08,.94)}}
+[data-am=swirl]{animation:m_swirl 15.3s linear infinite}@keyframes m_swirl{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.85)}100%{transform:rotate(360deg) scale(1)}}
+[data-am=neon]{animation:m_neon 4.42s ease-in-out infinite}@keyframes m_neon{0%,100%{filter:drop-shadow(0 0 4px var(--a1))}50%{filter:drop-shadow(0 0 14px var(--a1)) drop-shadow(0 0 34px var(--a2))}}
+[data-am=zigzag]{animation:m_zigzag 5.78s ease-in-out infinite}@keyframes m_zigzag{0%,100%{transform:translate(0,0)}25%{transform:translate(14px,-10px)}50%{transform:translate(0,-20px)}75%{transform:translate(-14px,-10px)}}
+[data-am=flip]{animation:m_flip 8.5s ease-in-out infinite}@keyframes m_flip{0%,100%{transform:perspective(800px) rotateX(0)}50%{transform:perspective(800px) rotateX(180deg)}}
+/* ===== built-in animation for EVERY insert object ===== */
+.a-hd{animation:hdg 5.1s ease-in-out infinite}@keyframes hdg{50%{text-shadow:0 0 26px var(--a1)}}
+.a-tx{animation:txs 10.2s ease-in-out infinite}@keyframes txs{50%{opacity:.8;transform:translateX(5px)}}
+.sl .k:before{transform-origin:left;animation:kl 4.08s ease-in-out infinite alternate}@keyframes kl{from{transform:scaleX(.3)}to{transform:scaleX(1.5)}}
+.sl .k span{animation:kt 5.1s ease-in-out infinite}@keyframes kt{50%{letter-spacing:.36em}}
+.qt{animation:qg 5.1s ease-in-out infinite}@keyframes qg{50%{border-left-color:var(--a2);box-shadow:-10px 0 26px -14px var(--a1)}}
+.qt:before{content:"\275D";position:absolute;right:0;top:-.3em;font-size:2.2em;line-height:1;color:var(--a1);opacity:.35;animation:qm 6.8s ease-in-out infinite}@keyframes qm{50%{transform:translateY(-10px) rotate(8deg);opacity:.6}}
+.bdg{position:relative;overflow:hidden;animation:bp 3.74s ease-in-out infinite}@keyframes bp{50%{box-shadow:0 0 44px color-mix(in srgb,var(--a1) 70%,transparent)}}
+.bdg:after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:bs 4.42s ease-in-out infinite}@keyframes bs{to{left:140%}}
+.sl li:before{animation:tk 4.08s ease-in-out infinite}.sl li:nth-child(2n):before{animation-delay:-.8s}.sl li:nth-child(3n):before{animation-delay:-1.5s}@keyframes tk{50%{transform:scale(1.4)}}
+.sl.on li{animation:lii 1.02s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + 0.85s + var(--i,0)*0.31s) both}
+.sl li:nth-child(1){--i:0}.sl li:nth-child(2){--i:1}.sl li:nth-child(3){--i:2}.sl li:nth-child(4){--i:3}.sl li:nth-child(5){--i:4}.sl li:nth-child(6){--i:5}.sl li:nth-child(7){--i:6}.sl li:nth-child(8){--i:7}.sl li:nth-child(9){--i:8}.sl li:nth-child(10){--i:9}
+@keyframes lii{from{opacity:0;transform:translateX(-40px)}}
+.pro h3,.con h3{animation:hdg 5.1s ease-in-out infinite}
+.sl th{animation:hdg 5.1s ease-in-out infinite}
+.sl.on tbody tr{animation:tri 1.02s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + 0.85s + var(--i,0)*0.26s) both}
+.sl tbody tr:nth-child(1){--i:0}.sl tbody tr:nth-child(2){--i:1}.sl tbody tr:nth-child(3){--i:2}.sl tbody tr:nth-child(4){--i:3}.sl tbody tr:nth-child(5){--i:4}.sl tbody tr:nth-child(6){--i:5}.sl tbody tr:nth-child(7){--i:6}.sl tbody tr:nth-child(8){--i:7}
+@keyframes tri{from{opacity:0;transform:translateX(60px)}}
+.sl td{animation:tdp 8.5s ease-in-out infinite}.sl tbody tr:nth-child(2n) td{animation-delay:-1.6s}.sl tbody tr:nth-child(3n) td{animation-delay:-3.2s}@keyframes tdp{50%{background:color-mix(in srgb,var(--a1) 14%,transparent)}}
+.a-img{position:relative;width:100%;height:100%;overflow:hidden}.a-img img{animation:kb 23.8s ease-in-out infinite alternate}@keyframes kb{from{transform:scale(1)}to{transform:scale(1.14) translate(-2%,-2%)}}
+.a-img:after{content:"";position:absolute;top:0;bottom:0;width:35%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);animation:bs 8.5s ease-in-out infinite}
+.ph{animation:phb 4.08s ease-in-out infinite}@keyframes phb{50%{border-color:var(--a1);color:var(--a1)}}
+.a-sh{background-size:240% 240%!important;animation:shg 10.2s ease-in-out infinite,shb 5.1s ease-in-out infinite}@keyframes shg{0%,100%{background-position:0 0}50%{background-position:100% 100%}}@keyframes shb{50%{filter:brightness(1.3) saturate(1.2)}}
+.a-em{animation:emw 5.1s ease-in-out infinite;transform-origin:50% 80%}@keyframes emw{0%,100%{transform:rotate(-7deg) scale(1)}50%{transform:rotate(7deg) scale(1.1)}}
+.a-orb{animation:orbb 11.9s ease-in-out infinite alternate}@keyframes orbb{to{transform:scale(1.25) translate(30px,-20px);filter:blur(34px) hue-rotate(60deg)}}
+.sl.on .stp .t{animation:lii 0.85s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + 0.51s + var(--i,0)*0.34s) both}
+.stp:nth-child(2){--i:0}.stp:nth-child(3){--i:1}.stp:nth-child(4){--i:2}.stp:nth-child(5){--i:3}.stp:nth-child(6){--i:4}.stp:nth-child(7){--i:5}.stp:nth-child(8){--i:6}.stp:nth-child(9){--i:7}
+.sl.on .chip{animation:chin 1.02s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + var(--i,0)*0.2s) both,fl 5.95s ease-in-out calc(var(--d,0s) + 2.04s) infinite}
+.chip:nth-child(1){--i:0}.chip:nth-child(2){--i:1}.chip:nth-child(3){--i:2}.chip:nth-child(4){--i:3}.chip:nth-child(5){--i:4}.chip:nth-child(6){--i:5}.chip:nth-child(7){--i:6}.chip:nth-child(8){--i:7}
+@keyframes chin{from{opacity:0;transform:scale(.3) translateY(30px)}}
+.sl.on .c .lb,.sl.on .c h3,.sl.on .c p{animation:lii 1.02s cubic-bezier(.2,.8,.2,1) calc(var(--d,0s) + 0.59s) both}.sl.on .c h3{animation-delay:calc(var(--d,0s) + 0.85s)}.sl.on .c p{animation-delay:calc(var(--d,0s) + 1.1s)}
+.bar i{animation:grh 2.04s var(--bd,0.85s) both,bgl 4.76s ease-in-out infinite}@keyframes bgl{50%{filter:brightness(1.35)}}
+.bc:nth-child(1) .bar i{--bd:0.85s}.bc:nth-child(2) .bar i{--bd:1.19s}.bc:nth-child(3) .bar i{--bd:1.53s}.bc:nth-child(4) .bar i{--bd:1.87s}.bc:nth-child(5) .bar i{--bd:2.21s}.bc:nth-child(6) .bar i{--bd:2.55s}.bc:nth-child(7) .bar i{--bd:2.89s}.bc:nth-child(8) .bar i{--bd:3.23s}
+.cw{animation:cwp 5.1s ease-in-out infinite}@keyframes cwp{50%{text-shadow:0 0 54px var(--a1)}}
+.mt2{animation:txs 8.5s ease-in-out infinite}
+.stepper .stp .t{}
+
+/* ===== finance-deck animation pack (ported into the editor) ===== */
+:root{--ex:cubic-bezier(.16,1,.3,1);--sp:cubic-bezier(.34,1.56,.64,1)}
+[data-an=kin]{--an:f_kin}@keyframes f_kin{from{opacity:0;transform:translateX(-110px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+[data-an=hwipe]{--an:f_hwipe}@keyframes f_hwipe{from{opacity:0;transform:translateY(50px) scale(.94);filter:blur(6px);clip-path:inset(-30px 100% -30px -30px)}to{opacity:1;transform:none;filter:none;clip-path:inset(-30px)}}
+[data-an=hflip]{--an:f_hflip}@keyframes f_hflip{from{opacity:0;transform:perspective(900px) rotateX(-88deg) translateY(-40px);transform-origin:50% 0;filter:blur(5px)}to{opacity:1;transform:none;transform-origin:50% 0;filter:none}}
+[data-an=hzoom]{--an:f_hzoom}@keyframes f_hzoom{from{opacity:0;transform:scale(1.45);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+[data-an=hdrop]{--an:f_hdrop;--ez:var(--sp)}@keyframes f_hdrop{from{opacity:0;transform:translateY(-120px) scale(1.06);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+[data-an=focusin]{--an:f_focusin}@keyframes f_focusin{from{opacity:0;transform:translateY(46px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+[data-an=coinin]{--an:f_coinin;--ez:var(--sp)}@keyframes f_coinin{from{opacity:0;transform:scale(0) rotate(-360deg)}to{opacity:1;transform:none}}
+[data-an=cardl]{--an:f_cardl}@keyframes f_cardl{from{opacity:0;transform:perspective(1100px) translateX(-140px) rotateY(38deg) scale(.86);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+[data-an=cardr]{--an:f_cardr}@keyframes f_cardr{from{opacity:0;transform:perspective(1100px) translateX(140px) rotateY(-38deg) scale(.86);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+[data-an=stepin]{--an:f_stepin}@keyframes f_stepin{from{opacity:0;transform:perspective(900px) translateY(70px) rotateX(-65deg) scale(.85);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+[data-an=vdin]{--an:f_vdin}@keyframes f_vdin{from{opacity:0;transform:translateX(-140px) scale(.96);clip-path:inset(-40px 100% -40px 0);filter:blur(4px)}to{opacity:1;transform:none;clip-path:inset(-40px);filter:none}}
+[data-an=trkin]{--an:f_trkin}@keyframes f_trkin{from{clip-path:inset(-40px 100% -40px 0)}to{clip-path:inset(-40px)}}
+[data-an=tickup]{--an:f_tickup}@keyframes f_tickup{from{transform:translateY(100%)}to{transform:none}}
+[data-an=pillpop]{--an:f_pillpop;--ez:var(--sp)}@keyframes f_pillpop{from{opacity:0;transform:translateY(60px) scale(.2) rotate(-14deg)}to{opacity:1;transform:none}}
+
+/* slide-to-slide glide transition */
+@keyframes trglide{from{opacity:0;transform:translateX(120px) scale(.94) rotate(1.2deg);filter:blur(5px)}}
+@keyframes dr{to{transform:translate(180px,-120px) scale(1.4)}}.orb{animation-duration:18.7s}
+
+/* kicker */
+@keyframes f_lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes f_kTrack{from{letter-spacing:.9em}to{letter-spacing:.28em}}
+@keyframes f_kGlow{50%{text-shadow:0 0 18px var(--a1)}}
+.sl.on .k:before{transform-origin:0 50%;animation:f_lineGrow 2.21s var(--ex) calc(var(--d,0s) + 0.59s) both}
+.sl.on .k span{animation:f_kTrack 2.04s var(--ex) var(--d,0s) both,f_kGlow 5.1s ease-in-out calc(var(--d,0s) + 2.38s) infinite}
+.sh{animation-duration:6.12s}
+
+/* card insides cascade */
+@keyframes f_txtL{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:none}}
+@keyframes f_txtUp{from{opacity:0;transform:translateY(28px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.sl.on .c>.lb{animation:f_txtL 1.53s var(--ex) calc(var(--d,0s) + 0.85s) both}
+.sl.on .c>h3{animation:f_txtUp 1.53s var(--ex) calc(var(--d,0s) + 1.1s) both}
+.sl.on .c>p{animation:f_txtUp 1.53s var(--ex) calc(var(--d,0s) + 1.36s) both}
+.sl .c{transition:box-shadow 0.51s,scale 0.85s var(--sp)}
+
+/* chips: drop in, bounce, float, glow */
+@keyframes f_chipDrop{from{opacity:0;transform:translateY(-110px) scale(.4) rotate(-14deg)}to{opacity:1;transform:none}}
+@keyframes f_chipGlow{50%{box-shadow:0 0 46px color-mix(in srgb,var(--a1) 80%,transparent);border-color:var(--a1)}}
+.sl.on .chips2 .chip{animation:f_chipDrop 1.7s var(--sp) calc(var(--d,0s) + 0.34s + var(--ci,0)*0.34s) both,fl 5.44s ease-in-out calc(var(--d,0s) + 3.4s + var(--ci,0)*0.51s) infinite,f_chipGlow 4.08s ease-in-out calc(var(--d,0s) + 3.4s + var(--ci,0)*0.51s) infinite}
+.chips2>*:nth-child(1){--ci:0}.chips2>*:nth-child(2){--ci:1}.chips2>*:nth-child(3){--ci:2}.chips2>*:nth-child(4){--ci:3}.chips2>*:nth-child(5){--ci:4}.chips2>*:nth-child(6){--ci:5}
+
+/* stepper */
+@keyframes f_cardBob{50%{transform:translateY(-8px)}}
+@keyframes f_nPop{from{opacity:0;transform:scale(0) rotate(-360deg)}to{opacity:1;transform:none}}
+@keyframes f_lineDraw{from{clip-path:inset(-10px 100% -10px 0)}to{clip-path:inset(-10px)}}
+.stepper .stp:nth-child(2){--ci:0}.stepper .stp:nth-child(3){--ci:1}.stepper .stp:nth-child(4){--ci:2}.stepper .stp:nth-child(5){--ci:3}.stepper .stp:nth-child(6){--ci:4}.stepper .stp:nth-child(7){--ci:5}.stepper .stp:nth-child(8){--ci:6}.stepper .stp:nth-child(9){--ci:7}
+.sl.on .stepper .stp{animation:f_stepIn 2.04s var(--ex) calc(var(--d,0s) + var(--ci,0)*0.34s) both,f_cardBob 8.5s ease-in-out calc(var(--d,0s) + var(--ci,0)*0.34s + 2.72s) infinite}
+@keyframes f_stepIn{from{opacity:0;transform:perspective(900px) translateY(70px) rotateX(-65deg) scale(.85);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.sl.on .stepper .stp .n{animation:f_nPop 1.7s var(--sp) calc(var(--d,0s) + 0.59s + var(--ci,0)*0.34s) both,pu 4.42s ease-in-out calc(var(--d,0s) + 2.72s + var(--ci,0)*0.68s) infinite}
+.sl.on .stepper .stp .t{animation:f_txtUp 1.53s var(--ex) calc(var(--d,0s) + 1.19s + var(--ci,0)*0.34s) both}
+.sl.on .stepper .dl{animation:f_lineDraw 3.4s var(--ex) calc(var(--d,0s) + 1.02s) both,dash 2.04s linear infinite}
+
+/* check list: pros from the left, cons from the right */
+@keyframes f_liL{from{opacity:0;transform:translateX(-90px)}to{opacity:1;transform:none}}
+@keyframes f_liR{from{opacity:0;transform:translateX(90px)}to{opacity:1;transform:none}}
+@keyframes f_tickPop{from{opacity:0;transform:scale(0) rotate(-270deg)}to{opacity:1;transform:none}}
+@keyframes f_tickPulse{50%{transform:scale(1.5);text-shadow:0 0 22px currentColor}}
+@keyframes f_xShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-20deg) scale(1.25)}75%{transform:rotate(20deg) scale(1.25)}}
+li:nth-child(1){--li:0}li:nth-child(2){--li:1}li:nth-child(3){--li:2}li:nth-child(4){--li:3}li:nth-child(5){--li:4}li:nth-child(6){--li:5}li:nth-child(7){--li:6}li:nth-child(8){--li:7}
+.sl.on .pro li{animation:f_liL 1.7s var(--ex) calc(var(--d,0s) + 0.68s + var(--li,0)*0.42s) both}
+.sl.on .con li{animation:f_liR 1.7s var(--ex) calc(var(--d,0s) + 0.68s + var(--li,0)*0.42s) both}
+.sl.on .pro li:before{animation:f_tickPop 1.53s var(--sp) calc(var(--d,0s) + 1.19s + var(--li,0)*0.42s) both,f_tickPulse 4.08s ease-in-out calc(var(--d,0s) + 3.4s + var(--li,0)*0.51s) infinite}
+.sl.on .con li:before{animation:f_tickPop 1.53s var(--sp) calc(var(--d,0s) + 1.19s + var(--li,0)*0.42s) both,f_xShake 4.42s ease-in-out calc(var(--d,0s) + 3.4s + var(--li,0)*0.51s) infinite}
+
+/* meter */
+@keyframes f_meterGlow{50%{box-shadow:0 0 18px var(--a1)}}
+.sl.on .mt2{animation:f_txtL 1.53s var(--ex) var(--d,0s) both}
+.sl.on .m i{animation:gr 3.06s var(--ex) calc(var(--d,0s) + 0.85s) both,sheen 5.1s linear infinite,f_meterGlow 3.4s ease-in-out calc(var(--d,0s) + 3.91s) infinite}
+
+/* quote (judgement banner) */
+@keyframes f_vdGlow{50%{box-shadow:-10px 0 54px -6px var(--a1);border-left-color:var(--a2)}}
+@keyframes f_bLight{50%{text-shadow:0 0 18px var(--a1)}}
+.qt{animation:f_vdGlow 4.42s ease-in-out infinite}
+.qt small{animation:f_bLight 4.42s ease-in-out infinite}
+
+/* table: cells fly in row by row, highlight sweeps down */
+@keyframes f_cellIn{from{opacity:0;transform:translateX(110px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes f_rowSweep{0%,55%,100%{box-shadow:inset 0 0 0 999px transparent}25%{box-shadow:inset 0 0 0 999px color-mix(in srgb,var(--a1) 20%,transparent)}}
+tr:nth-child(1){--ri:0}tr:nth-child(2){--ri:1}tr:nth-child(3){--ri:2}tr:nth-child(4){--ri:3}tr:nth-child(5){--ri:4}tr:nth-child(6){--ri:5}tr:nth-child(7){--ri:6}tr:nth-child(8){--ri:7}
+th:nth-child(1),td:nth-child(1){--ci:0}th:nth-child(2),td:nth-child(2){--ci:1}th:nth-child(3),td:nth-child(3){--ci:2}th:nth-child(4),td:nth-child(4){--ci:3}th:nth-child(5),td:nth-child(5){--ci:4}
+.sl.on tbody tr{animation:none}
+.sl.on th{animation:f_cellIn 1.7s var(--ex) calc(var(--d,0s) + 0.34s + var(--ri,0)*0.37s + var(--ci,0)*0.15s) both}
+.sl.on td{animation:f_cellIn 1.7s var(--ex) calc(var(--d,0s) + 0.34s + var(--ri,0)*0.37s + var(--ci,0)*0.15s) both,f_rowSweep 10.2s ease-in-out calc(var(--d,0s) + 4.25s + var(--ri,0)*1.36s) infinite}
+
+/* coin, ticker, track */
+@keyframes f_coinGlow{50%{box-shadow:0 0 150px var(--a1),0 0 40px var(--a2)}}
+.coin2 b{animation:fp 8.5s ease-in-out infinite,f_coinGlow 4.08s ease-in-out infinite}
+.sl.on .tick div{animation:mq 30.6s linear infinite}
+@keyframes f_ballPulse{50%{transform:scale(1.6)}}
+.trk2:after{animation:mv 5.1s ease-in-out infinite alternate,f_ballPulse 1.7s ease-in-out infinite}
 
 .ob.ins{animation:insin .55s cubic-bezier(.2,.9,.3,1.2) both}@keyframes insin{from{opacity:0;transform:scale(.6)}}
 .sl .typer{font-family:'Space Mono',monospace;font-weight:700;white-space:nowrap;overflow:hidden;border-right:.12em solid currentColor;width:calc(var(--n)*1ch);max-width:100%;animation:typing var(--tt,3s) steps(var(--n),end) calc(var(--d,0s) + .3s) both,caret .8s step-end infinite}
@@ -218,8 +396,8 @@ const TXT=[['text','Text','area'],['fs','Font size','num'],['ff','Font','sel',FF
 /* ---------- the object library: add more by adding an entry here ---------- */
 const T={
  title:{n:'Shimmer title',ic:'T',w:1000,h:200,p:{text:'YOUR BIG TITLE',fs:84,ff:'Heading'},f:[['text','Text','area'],['fs','Font size','num'],['ff','Font','sel',FFN]],r:p=>`<div class="sh" data-k="text" style="font:${fw(p.ff)} ${p.fs}px/1.05 ${FF[p.ff]||FF.Heading};text-transform:uppercase">${nl(p.text)}</div>`},
- heading:{n:'Heading',ic:'H',w:800,h:80,p:{text:'A clear heading',fs:44,ff:'Heading',c:'ink'},f:TXT,r:p=>`<div data-k="text" style="font:${fw(p.ff)} ${p.fs}px/1.15 ${FF[p.ff]||FF.Heading};color:${cc(p.c)}">${nl(p.text)}</div>`},
- text:{n:'Paragraph',ic:'¶',w:640,h:140,p:{text:'Write your supporting text here. Double-click to edit on the slide.',fs:26,ff:'Body',c:'mut'},f:TXT,r:p=>`<div data-k="text" style="font:500 ${p.fs}px/1.5 ${FF[p.ff]||FF.Body};color:${cc(p.c)}">${nl(p.text)}</div>`},
+ heading:{n:'Heading',ic:'H',w:800,h:80,p:{text:'A clear heading',fs:44,ff:'Heading',c:'ink'},f:TXT,r:p=>`<div class="a-hd" data-k="text" style="font:${fw(p.ff)} ${p.fs}px/1.15 ${FF[p.ff]||FF.Heading};color:${cc(p.c)}">${nl(p.text)}</div>`},
+ text:{n:'Paragraph',ic:'¶',w:640,h:140,p:{text:'Write your supporting text here. Double-click to edit on the slide.',fs:26,ff:'Body',c:'mut'},f:TXT,r:p=>`<div class="a-tx" data-k="text" style="font:500 ${p.fs}px/1.5 ${FF[p.ff]||FF.Body};color:${cc(p.c)}">${nl(p.text)}</div>`},
  kicker:{n:'Kicker label',ic:'—',w:600,h:30,p:{text:'01 — SECTION LABEL'},f:[['text','Text']],r:p=>`<div class="k"><span data-k="text">${esc(p.text)}</span></div>`},
  card:{n:'Glow card',ic:'▣',w:480,h:240,p:{label:'Meaning',title:'Sell the invoice, get the cash',body:'A business sells unpaid invoices to a factor for short-term finance.'},f:[['label','Label'],['title','Title'],['body','Body','area']],r:p=>`<div class="c"><div class="lb"><span data-k="label">${esc(p.label)}</span></div><h3 data-k="title">${esc(p.title)}</h3><p data-k="body">${esc(p.body)}</p></div>`},
  stepper:{n:'Stepper (01 — 02 — 03)',ic:'①',w:1000,h:100,p:{n:4,labels:'Plan|Build|Launch|Grow'},f:[['n','Steps (2-8)','num'],['labels','Labels (separate with |)']],r:p=>{const n=Math.max(2,Math.min(8,+p.n||4)),L=String(p.labels||'').split('|');let h='';for(let i=0;i<n;i++)h+=`<div class="stp"><div class="n">${String(i+1).padStart(2,'0')}</div>${L[i]?`<div class="t">${esc(L[i])}</div>`:''}</div>`;return`<div class="stepper"><div class="dl"></div>${h}</div>`}},
@@ -230,20 +408,20 @@ const T={
  coin:{n:'Orbiting coin',ic:'$',w:340,h:340,p:{text:'$',fs:120},f:[['text','Symbol'],['fs','Size','num']],r:p=>`<div class="coin2"><i></i><i></i><b style="font-size:${p.fs}px">${esc(p.text)}</b></div>`},
  ticker:{n:'Scrolling ticker',ic:'⇢',w:1280,h:58,p:{text:'Invoice factoring ◆ Venture capital ◆ Cash flow ◆ Equity ◆'},f:[['text','Text']],r:p=>`<div class="tick"><div>${(esc(p.text)+' ').repeat(12)}</div></div>`},
  track:{n:'Glowing track',ic:'●─',w:700,h:40,p:{},f:[],r:()=>`<div class="trk2"></div>`},
- image:{n:'Image',ic:'▨',w:420,h:300,p:{src:'',fit:'cover',rad:16},f:[['src','Image','img'],['fit','Fit','sel',['cover','contain']],['rad','Corner radius','num']],r:p=>safeImg(p.src)?`<img alt="" src="${safeImg(p.src)}" style="width:100%;height:100%;object-fit:${p.fit};border-radius:${p.rad}px;display:block">`:`<div class="ph">Image<br>upload or paste a link</div>`},
- shape:{n:'Shape',ic:'◆',w:300,h:200,p:{kind:'rect',f1:'a1',f2:'a2',glow:30,rad:24,op:90},f:[['kind','Shape','sel',['rect','circle']],['f1','Color 1','color'],['f2','Color 2','color'],['glow','Glow','num'],['rad','Corner radius','num'],['op','Opacity %','num']],r:p=>`<div style="width:100%;height:100%;background:linear-gradient(135deg,${cc(p.f1)},${cc(p.f2)});border-radius:${p.kind=='circle'?'50%':p.rad+'px'};box-shadow:0 0 ${p.glow}px ${cc(p.f1)};opacity:${(+p.op||0)/100}"></div>`},
+ image:{n:'Image',ic:'▨',w:420,h:300,p:{src:'',fit:'cover',rad:16},f:[['src','Image','img'],['fit','Fit','sel',['cover','contain']],['rad','Corner radius','num']],r:p=>safeImg(p.src)?`<div class="a-img" style="border-radius:${p.rad}px"><img alt="" src="${safeImg(p.src)}" style="width:100%;height:100%;object-fit:${p.fit};display:block"></div>`:`<div class="ph">Image<br>upload or paste a link</div>`},
+ shape:{n:'Shape',ic:'◆',w:300,h:200,p:{kind:'rect',f1:'a1',f2:'a2',glow:30,rad:24,op:90},f:[['kind','Shape','sel',['rect','circle']],['f1','Color 1','color'],['f2','Color 2','color'],['glow','Glow','num'],['rad','Corner radius','num'],['op','Opacity %','num']],r:p=>`<div class="a-sh" style="width:100%;height:100%;background:linear-gradient(135deg,${cc(p.f1)},${cc(p.f2)});border-radius:${p.kind=='circle'?'50%':p.rad+'px'};box-shadow:0 0 ${p.glow}px ${cc(p.f1)};opacity:${(+p.op||0)/100}"></div>`},
  table:{n:'Table',ic:'▦',w:760,h:200,p:{rows:'Feature|Factoring|Venture capital\nSpeed|Fast|Slow\nCost|Fees|Equity share',fs:22},f:[['rows','Rows (use | between cells, first row = header)','area'],['fs','Font size','num']],r:p=>{const R=lines(p.rows).map(r=>r.split('|'));if(!R.length)return'';return`<table style="font-size:${p.fs}px"><thead><tr>${R[0].map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${R.slice(1).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`}},
  counter:{n:'Count-up number',ic:'123',w:420,h:120,p:{to:85,pre:'',suf:'%',fs:96},f:[['to','Number','num'],['pre','Prefix'],['suf','Suffix'],['fs','Font size','num']],r:p=>`<div class="cw" style="font-size:${p.fs}px"><span>${esc(p.pre)}</span><b class="cn" style="--to:${Math.round(+p.to||0)}"></b><span>${esc(p.suf)}</span></div>`},
  quote:{n:'Quote',ic:'❝',w:700,h:160,p:{text:'Cash is king, but timing is the crown.',by:'Business Studies',fs:36},f:[['text','Quote','area'],['by','Author'],['fs','Font size','num']],r:p=>`<div class="qt" style="font-size:${p.fs}px"><span data-k="text">${nl(p.text)}</span><small>${esc(p.by)}</small></div>`},
  badge:{n:'Glow badge',ic:'★',w:160,h:50,p:{text:'NEW',fs:20},f:[['text','Text'],['fs','Font size','num']],r:p=>`<div class="bdg" style="font-size:${p.fs}px" data-k="text">${esc(p.text)}</div>`},
  divider:{n:'Dashed divider',ic:'┄',w:600,h:3,p:{dir:'h'},f:[['dir','Direction','sel',['h','v']]],r:p=>`<div class="dv ${p.dir=='v'?'v':''}"></div>`},
- emoji:{n:'Big emoji',ic:'🚀',w:160,h:160,p:{text:'🚀',fs:120},f:[['text','Emoji'],['fs','Size','num']],r:p=>`<div style="font-size:${p.fs}px;line-height:1;text-align:center" data-k="text">${esc(p.text)}</div>`},
+ emoji:{n:'Big emoji',ic:'🚀',w:160,h:160,p:{text:'🚀',fs:120},f:[['text','Emoji'],['fs','Size','num']],r:p=>`<div class="a-em" style="font-size:${p.fs}px;line-height:1;text-align:center" data-k="text">${esc(p.text)}</div>`},
  ring:{n:'Spinner ring',ic:'◌',w:120,h:120,p:{},f:[],r:()=>`<div class="rg"></div>`},
  chart:{n:'Bar chart',ic:'▮▮',w:560,h:300,p:{data:'2022:40\n2023:65\n2024:90\n2025:75',fs:18},f:[['data','Label:value per line','area'],['fs','Font size','num']],r:p=>{const D=lines(p.data).map(l=>{const i=l.lastIndexOf(':');return[l.slice(0,i<0?l.length:i),+l.slice(i+1)||0]}),mx=Math.max(1,...D.map(d=>d[1]));return`<div class="bars" style="font-size:${p.fs}px">${D.map(d=>`<div class="bc"><div class="bar"><i style="--h:${Math.round(d[1]/mx*100)}%"></i></div><span>${esc(d[0])}<br><b>${d[1]}</b></span></div>`).join('')}</div>`}},
- orb:{n:'Glow orb',ic:'✺',w:360,h:360,p:{c:'a2',op:45},f:[['c','Color','color'],['op','Opacity %','num']],r:p=>`<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,${cc(p.c)},transparent 70%);filter:blur(30px);opacity:${(+p.op||0)/100}"></div>`},
+ orb:{n:'Glow orb',ic:'✺',w:360,h:360,p:{c:'a2',op:45},f:[['c','Color','color'],['op','Opacity %','num']],r:p=>`<div class="a-orb" style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,${cc(p.c)},transparent 70%);filter:blur(30px);opacity:${(+p.op||0)/100}"></div>`},
  typer:{n:'Typewriter text',ic:'⌨',w:700,h:70,p:{text:'Typing this out…',fs:40,c:'a1',spd:3},f:[['text','Text'],['fs','Font size','num'],['spd','Typing time (seconds)','num'],['c','Colour','color']],r:p=>{const t=String(p.text||'').replace(/\n/g,' ');return`<div class="typer" data-k="text" style="--n:${Math.max(1,[...t].length)};--tt:${Math.max(.5,+p.spd||3)}s;font-size:${p.fs}px;color:${cc(p.c)}">${esc(t)}</div>`}}
 };
-const AN=['rise','fade','zoom','left','right','drop','blur','spin','flip','bounce','wipe','none'],AM=['none','float','pulse','swing','spin','glow'];
+const AN=['rise','fade','zoom','left','right','drop','blur','spin','flip','bounce','wipe','pop','elastic','jelly','tada','flipy','swingin','zoomout','skew','roll','unfold','curtain','iris','glitch','flicker','spiral','lightspeed','slideup','slidedown','tilt','stretch','focus','rubber','wipedown','wipeleft','wipeup','blinds','peek','whirl','drift','dropbounce','kin','hwipe','hflip','hzoom','hdrop','focusin','coinin','cardl','cardr','stepin','vdin','trkin','tickup','pillpop','none'],AM=['none','float','pulse','swing','spin','glow','bounce','shake','wobble','tilt','heartbeat','flicker','hue','jelly','orbit','breathe','sway','rubber','swirl','neon','zigzag','flip'];
 
 /* ---------- state ---------- */
 const EMPTY='<div class="empty"><div><b>This slide is empty</b><br>Open the <b>Insert</b> tab on the right and tap anything to add it.<br>Or pick a ready-made layout in the <b>Slide</b> tab.</div></div>';
@@ -251,10 +429,10 @@ let deck,id=null,sel=null,cur=0,tab='add',hist=[],fut=[],lastSnap=0,S=.5,Z=1,dir
 const closed=new Set(['Custom colours','Copy as CSS','Sample slides']);
 const CAT={Text:['title','heading','text','typer','kicker','quote','badge'],Shapes:['shape','orb','divider','ring','track','emoji','coin'],Data:['stepper','counter','meter','chart','table','pulse','list'],Cards:['card','chips','ticker'],Media:['image']};
 const TEXTY=new Set(['typer','title','heading','text','kicker','quote','badge','card','list','chips','table','counter','pulse','emoji']);
-const TRN={none:'none',fade:'trfade',slide:'trslide',zoom:'trzoom',flip:'trflip',wipe:'trwipe'},SHN=['none','soft','hard','glow','neon'];
-const DEF={title:['blur','none'],heading:['rise','none'],text:['fade','none'],kicker:['left','none'],quote:['left','none'],badge:['bounce','pulse'],card:['zoom','none'],list:['rise','none'],chips:['rise','none'],ticker:['fade','none'],stepper:['wipe','none'],pulse:['zoom','none'],meter:['left','none'],coin:['spin','none'],track:['wipe','none'],image:['zoom','none'],shape:['zoom','float'],table:['rise','none'],counter:['zoom','none'],divider:['wipe','none'],emoji:['bounce','float'],ring:['spin','none'],chart:['rise','none'],orb:['fade','float'],typer:['fade','none']};
-const mk=(t,x=80,y=80)=>{const d=DEF[t]||['rise','none'];return{id:uid(),type:t,x,y,w:T[t].w,h:T[t].h,an:d[0],dl:0,du:.9,am:d[1],rot:0,op:100,sh:'none',bl:0,lk:false,ts:{},p:{...T[t].p}}};
-function starter(){const o=[mk('orb',-100,-120),mk('kicker',80,90),mk('title',80,140),mk('text',80,380),mk('stepper',80,540)];o[0].an='none';o[0].w=o[0].h=560;o[1].p.text='WELCOME TO ADVANCED PPT';o[1].dl=.1;o[2].dl=.2;o[2].h=220;o[3].p.text='Open the Insert tab to add objects. Drag to move, pull the corner to resize, double-click text to edit.';o[3].dl=.4;o[4].w=1100;o[4].dl=.6;return{title:'Untitled deck',theme:{...pal(PAL['Gold & Emerald']),orbs:true,cm:'solid',fh:'Fraunces',fb:'Manrope'},slides:[{objs:o,tr:'fade'}]}}
+const TRN={none:'none',glide:'trglide',fade:'trfade',slide:'trslide',zoom:'trzoom',flip:'trflip',wipe:'trwipe'},SHN=['none','soft','hard','glow','neon'];
+const DEF={title:['hwipe','none'],heading:['hflip','none'],text:['focusin','none'],kicker:['kin','none'],quote:['vdin','none'],badge:['pillpop','heartbeat'],card:['cardl','float'],list:['fade','none'],chips:['fade','none'],ticker:['tickup','none'],stepper:['fade','none'],pulse:['jelly','none'],meter:['wipeleft','none'],coin:['coinin','float'],track:['trkin','none'],image:['iris','none'],shape:['elastic','swirl'],table:['fade','none'],counter:['rubber','heartbeat'],divider:['stretch','none'],emoji:['dropbounce','bounce'],ring:['whirl','none'],chart:['slideup','none'],orb:['zoomout','breathe'],typer:['flicker','none']};
+const mk=(t,x=80,y=80)=>{const d=DEF[t]||['rise','none'];return{id:uid(),type:t,x,y,w:T[t].w,h:T[t].h,an:d[0],dl:0,du:d[0]=='fade'?.9:1.6,am:d[1],rot:0,op:100,sh:'none',bl:0,lk:false,ts:{},p:{...T[t].p}}};
+function starter(){const o=[mk('orb',-100,-120),mk('kicker',80,90),mk('title',80,140),mk('text',80,380),mk('stepper',80,540)];o[0].an='none';o[0].w=o[0].h=560;o[1].p.text='WELCOME TO ADVANCED PPT';o[1].dl=.3;o[2].dl=1.4;o[2].h=220;o[3].p.text='Open the Insert tab to add objects. Drag to move, pull the corner to resize, double-click text to edit.';o[3].dl=3;o[4].w=1100;o[4].dl=4.4;return{title:'Untitled deck',theme:{...pal(PAL['Gold & Emerald']),orbs:true,cm:'solid',fh:'Fraunces',fb:'Manrope'},slides:[{objs:o,tr:'glide'}]}}
 const find=i=>deck.slides[cur].objs.find(o=>o.id==i),curObj=()=>sel&&find(sel);
 const stat=t=>$('#st').textContent=t;
 async function api(p,m='GET',b){const r=await fetch('/api/'+p,{method:m,credentials:'same-origin',headers:b?{'Content-Type':'application/json'}:{},body:b?JSON.stringify(b):undefined});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(r.status==401?'Not logged in — go back to RetroOS and log in':d.error||'Error '+r.status);return d}
@@ -299,13 +477,14 @@ function paneEdit(){const o=curObj();if(!o)return'<p class="hint" style="padding
  +(TEXTY.has(o.type)?sec('Text style',`<div class="btns">${tg('b','B','font-weight:800')}${tg('i','I','font-style:italic')}${tg('u','U','text-decoration:underline')}${tg('up','AA')}</div><div class="btns">${['left','center','right'].map(a=>`<button data-al="${a}" class="${(t.al||'left')==a?'on':''}">${a}</button>`).join('')}</div>${rr('Letter spacing','data-ts="ls"',t.ls||0,-2,20,.5)}${rr('Line height','data-ts="lh"',t.lh||1.3,.9,2.4,.1)}`):'')
  +sec('Position & size',`<div class="g4">${['x','y','w','h'].map(c=>`<label>${c=='x'?'Left':c=='y'?'Top':c=='w'?'Width':'Height'}<input type="number" data-c="${c}" value="${o[c]}"></label>`).join('')}</div>${rr('Rotation','data-c="rot"',o.rot||0,-180,180,1)}<div class="btns">${[['l','⇤ Left'],['c','↔ Centre'],['r','⇥ Right'],['t','⤒ Top'],['m','↕ Middle'],['b','⤓ Bottom']].map(a=>`<button data-aln="${a[0]}">${a[1]}</button>`).join('')}</div>`)
  +sec('Look',`${rr('Opacity','data-c="op"',o.op??100,0,100,1)}<label>Shadow<select data-c="sh">${opt(SHN,o.sh||'none')}</select></label>${rr('Blur','data-c="bl"',o.bl||0,0,20,1)}`)
- +sec('Animation',`<label>Appears with<select data-c="an">${opt(AN,o.an)}</select></label>${rr('Starts after (s)','data-c="dl"',o.dl||0,0,6,.1)}${rr('Takes (s)','data-c="du"',o.du||.9,.2,3,.1)}<label>Keeps moving with<select data-c="am">${opt(AM,o.am)}</select></label><button data-pv>▶ Preview this slide</button>`)
+ +sec('Animation',`<label>Appears with<select data-c="an">${opt(AN,o.an)}</select></label>${rr('Starts after (s)','data-c="dl"',o.dl||0,0,20,.1)}${rr('Takes (s)','data-c="du"',o.du||.9,.2,8,.1)}<label>Keeps moving with<select data-c="am">${opt(AM,o.am)}</select></label><button data-pv>▶ Preview this slide</button>`)
  +sec('Arrange',`<div class="btns"><button data-op="front">To front</button><button data-op="back">To back</button><button data-op="dup">Duplicate</button><button data-op="lock">${o.lk?'Unlock':'Lock'}</button><button data-op="del">Delete</button></div>`)}
 function paneSlide(){const s=deck.slides[cur],b=s.bg||{t:'theme'};
  const bf=b.t=='solid'?`<label>Colour${cin('data-sl="c1"',b.c1)}</label>`:b.t=='grad'?`<div class="g4"><label>Colour 1${cin('data-sl="c1"',b.c1)}</label><label>Colour 2${cin('data-sl="c2"',b.c2)}</label></div>${rr('Angle','data-sl="ang"',b.ang??135,0,360,5)}`:b.t=='img'?`<label>Picture link<input data-sl="src" value="${(b.src||'').startsWith('data:')?'(uploaded image)':esc(b.src||'')}" placeholder="https://…"></label><label>Or upload<input type="file" accept="image/*" data-slup></label>${rr('Darken','data-sl="dim"',b.dim??40,0,90,5)}`:'';
  const lay=[...s.objs].reverse().map(o=>`<div class="dr ly${o.id==sel?' cur':''}" data-ly="${o.id}"><span>${T[o.type].ic} ${esc(lbl(o))}${o.lk?' 🔒':''}</span><button data-lu="${o.id}" title="Move forward">↑</button><button data-ld="${o.id}" title="Move back">↓</button></div>`).join('')||'<p class="hint">No objects on this slide yet.</p>';
  return sec('Slide background',`<label>Style<select data-sl="bgt"><option value="theme"${b.t=='theme'?' selected':''}>Match theme</option><option value="solid"${b.t=='solid'?' selected':''}>One colour</option><option value="grad"${b.t=='grad'?' selected':''}>Gradient</option><option value="img"${b.t=='img'?' selected':''}>Picture</option></select></label>${bf}<label><span><input type="checkbox" data-sl="orbs" ${s.orbs!==false?'checked':''}> Glow orbs on this slide</span></label>`)
  +sec('Transition & notes',`<label>Slide change<select data-sl="tr">${opt(Object.keys(TRN),s.tr||'fade')}</select></label><button data-trall>Use for every slide</button><label>Speaker notes (press N while presenting)<textarea data-sl="notes" rows="4">${esc(s.notes||'')}</textarea></label>`)
+ +sec('Animate everything',`<p class="hint">Gives every object a different entrance, staggers them one after another and adds a motion loop.</p><div class="btns"><button data-animall="slide">✨ This slide</button><button data-animall="all">✨ Whole deck</button></div>`)
  +sec('Layers (top first)',lay)
  +sec('Add a slide from a layout',`<div class="btns">${Object.keys(LAY).map(k=>`<button data-lay="${k}">${k}</button>`).join('')}</div>`)
  +sec('Sample slides',`<button data-samp>Add 10 sample slides</button>`)}
@@ -341,7 +520,7 @@ $('#pane').addEventListener('change',e=>{const t=e.target;
 function shrink(f){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const png=/png|gif|svg/.test(f.type),m=png?800:1100,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL(png?'image/png':'image/jpeg',.74))};i.src=r.result};r.readAsDataURL(f)})}
 
 /* ---------- object actions ---------- */
-function addObj(k){snap(true);const o=mk(k),n=deck.slides[cur].objs.length%6;o.x=Math.round((1280-o.w)/2)+n*22;o.y=Math.round((720-o.h)/2)+n*22;if(k=='ticker'||k=='orb'){o.x=Math.max(0,o.x-n*22);o.y=o.y-n*22}deck.slides[cur].objs.push(o);render();select(o.id);changed();const el=$('#fr [data-id="'+o.id+'"]');if(el){el.classList.add('ins');el.addEventListener('animationend',()=>el.classList.remove('ins'),{once:true})}toast('Added “'+T[k].n+'”. Drag it into place or fine-tune it in Format.')}
+function addObj(k){snap(true);const o=mk(k),n=deck.slides[cur].objs.length%6;if(k=='card'&&deck.slides[cur].objs.filter(x=>x.type=='card').length%2)o.an='cardr';{const pr=deck.slides[cur].objs.filter(x=>x.type!='orb'&&x.an!='none');o.dl=pr.length?Math.min(20,+(Math.max(...pr.map(x=>x.dl||0))+1.2).toFixed(1)):0}o.x=Math.round((1280-o.w)/2)+n*22;o.y=Math.round((720-o.h)/2)+n*22;if(k=='ticker'||k=='orb'){o.x=Math.max(0,o.x-n*22);o.y=o.y-n*22}deck.slides[cur].objs.push(o);render();select(o.id);changed();const el=$('#fr [data-id="'+o.id+'"]');if(el){el.classList.add('ins');el.addEventListener('animationend',()=>el.classList.remove('ins'),{once:true})}toast('Added “'+T[k].n+'”. Drag it into place or fine-tune it in Format.')}
 function dupObj(){const o=curObj();if(!o)return;snap(true);const c=JSON.parse(JSON.stringify(o));c.id=uid();c.x+=30;c.y+=30;deck.slides[cur].objs.push(c);render();select(c.id);changed()}
 function delObj(){if(!sel)return;snap(true);deck.slides[cur].objs=deck.slides[cur].objs.filter(o=>o.id!=sel);sel=null;render();select(null);changed()}
 function doOp(op){const o=curObj();if(!o)return;const a=deck.slides[cur].objs,i=a.indexOf(o);
@@ -361,12 +540,13 @@ $('#pane').addEventListener('click',async e=>{const ly=e.target.closest('[data-l
  else if(d.tg)tgl(d.tg);else if(d.al)setAl(d.al);else if(d.aln)alignTo(d.aln);
  else if(d.pv!==undefined)play();
  else if(d.lu)move(d.lu,1);else if(d.ld)move(d.ld,-1);
+ else if(d.animall!==undefined){snap(true);const E=AN.filter(a=>a!='none'),M=AM.filter(a=>a!='none'),L=d.animall=='all'?deck.slides:[deck.slides[cur]];L.forEach((sl,si)=>sl.objs.forEach((o,i)=>{o.an=E[(i*7+si*3+o.type.length)%E.length];o.dl=Math.min(20,+(i*1.1).toFixed(1));o.du=1.6;if(!o.am||o.am=='none')o.am=(DEF[o.type]&&DEF[o.type][1]!='none')?DEF[o.type][1]:M[(i*5+si+o.type.length)%M.length]}));changed();render();play();toast('Every object now has its own animation ✨')}
  else if(d.trall!==undefined){snap(true);deck.slides.forEach(s=>s.tr=deck.slides[cur].tr||'fade');changed();stat('Transition applied to all slides')}
  else if(d.pre){snap(true);Object.assign(deck.theme,pal(PAL[d.pre]));full();changed(true)}
  else if(d.cm){snap(true);deck.theme.cm=d.cm;full();changed(true)}
  else if(d.des){snap(true);const x=DES[d.des];Object.assign(deck.theme,pal(PAL[x[0]]),{cm:x[1],fh:x[2],fb:x[3],orbs:!!x[4]});full();changed(true)}
- else if(d.lay){snap(true);deck.slides.splice(cur+1,0,{objs:LAY[d.lay](),tr:'fade'});go(cur+1);changed()}
- else if(d.samp!==undefined){snap(true);['Title','Agenda','Two cards','Big stats','Chart + text','Timeline','Quote','Pros & cons','Compare table','Thank you'].forEach((n,i)=>deck.slides.splice(cur+1+i,0,{objs:LAY[n](),tr:'fade'}));go(cur+1);changed()}
+ else if(d.lay){snap(true);deck.slides.splice(cur+1,0,{objs:LAY[d.lay](),tr:'glide'});go(cur+1);changed()}
+ else if(d.samp!==undefined){snap(true);['Title','Agenda','Two cards','Big stats','Chart + text','Timeline','Quote','Pros & cons','Compare table','Thank you'].forEach((n,i)=>deck.slides.splice(cur+1+i,0,{objs:LAY[n](),tr:'glide'}));go(cur+1);changed()}
  else if(d.sp!==undefined){const n=await ask('Give this palette a name so you can reuse it later.',{title:'Save palette',input:'My palette',ok:'Save'});if(!n)return;const t=TH(deck.theme),a=mine();a.push({n:n.slice(0,30),p:[t.a1,t.a2,t.bg,t.ink]});setMine(a);pane()}
  else if(d.mp!==undefined){snap(true);Object.assign(deck.theme,pal(mine()[d.mp].p));full();changed(true)}
  else if(d.md!==undefined){const a=mine();a.splice(+d.md,1);setMine(a);pane()}
@@ -415,7 +595,7 @@ let dragI=null;
 $('#thumbs').addEventListener('dragstart',e=>{const t=e.target.closest('.th');if(t){dragI=+t.dataset.i;e.dataTransfer.effectAllowed='move'}});
 $('#thumbs').addEventListener('dragover',e=>{if(dragI!==null)e.preventDefault()});
 $('#thumbs').addEventListener('drop',e=>{const t=e.target.closest('.th');if(dragI===null||!t)return;e.preventDefault();const to=+t.dataset.i;if(to!==dragI){snap(true);const[s]=deck.slides.splice(dragI,1);deck.slides.splice(to,0,s);cur=to;full();changed(true)}dragI=null});
-$('#as').onclick=()=>{snap(true);deck.slides.splice(cur+1,0,{objs:[],tr:'fade'});go(cur+1);changed()};
+$('#as').onclick=()=>{snap(true);deck.slides.splice(cur+1,0,{objs:[],tr:'glide'});go(cur+1);changed()};
 $('#ds').onclick=()=>{snap(true);const c=JSON.parse(JSON.stringify(deck.slides[cur]));c.objs.forEach(o=>o.id=uid());deck.slides.splice(cur+1,0,c);go(cur+1);changed()};
 $('#rs').onclick=async()=>{if(deck.slides.length<2){toast('A deck needs at least one slide.');return}if(!await ask('Slide '+(cur+1)+' and everything on it will be removed. You can bring it back with Undo.',{title:'Delete this slide?',ok:'Delete slide',danger:1}))return;snap(true);deck.slides.splice(cur,1);go(Math.min(cur,deck.slides.length-1));changed()};
 const mv=d=>{const j=cur+d;if(j<0||j>=deck.slides.length)return;snap(true);[deck.slides[cur],deck.slides[j]]=[deck.slides[j],deck.slides[cur]];cur=j;full();changed(true)};
