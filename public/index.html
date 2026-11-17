@@ -124,7 +124,7 @@ let z=10,open={};
 function desktop(){
   $('#login').hidden=true;$('#desk').hidden=false;
   $('#icons').innerHTML='';
-  for(const k in APPS){const b=document.createElement('button');b.className='ico';b.innerHTML=`<b>${APPS[k].i}</b>${APPS[k].t}`;b.ondblclick=()=>launch(k);b.onclick=()=>{if(matchMedia('(pointer:coarse)').matches)launch(k)};b.onkeydown=e=>{if(e.key==='Enter')launch(k)};$('#icons').append(b)}
+  for(const k in APPS){const b=document.createElement('button');b.className='ico';b.innerHTML=`<b>${APPS[k].i}</b>${APPS[k].t}`;b.title='Click to open';b.onclick=()=>launch(k);$('#icons').append(b)}
   $('#menu').innerHTML=Object.keys(APPS).map(k=>`<button data-a="${k}">${APPS[k].t}</button>`).join('')+`<button data-a="out">LOG OUT (${USER})</button>`;
   launch('about');
 }
@@ -191,7 +191,7 @@ function settings(bd){
   bd.innerHTML='<div>PHOSPHOR COLOR:</div><div class="sw"></div>';
   for(const n in THEMES){const b=document.createElement('button');b.textContent=n;b.onclick=()=>theme(n);bd.querySelector('.sw').append(b)}
 }
-function about(bd){bd.innerHTML=`<div>RETROOS 86<br>USER: ${USER.toUpperCase()}<br><br>DOUBLE-CLICK AN ICON TO OPEN IT (TAP ON PHONES), OR USE THE [RETROOS] MENU.<br><br>YOUR NOTES LIVE ON THE SERVER, SO THEY FOLLOW YOUR ACCOUNT.</div>`}
+function about(bd){bd.innerHTML=`<div>RETROOS 86<br>USER: ${USER.toUpperCase()}<br><br>CLICK AN ICON TO OPEN IT, OR USE THE [RETROOS] MENU.<br><br>YOUR NOTES LIVE ON THE SERVER, SO THEY FOLLOW YOUR ACCOUNT.</div>`}
 
 start();
 </script>
