@@ -591,7 +591,7 @@ const undo=()=>{if(!hist.length)return;fut.push(JSON.stringify(deck));restore(hi
 function changed(a){dirty=true;allT=allT||!!a;stat('Unsaved');clearTimeout(tA);tA=setTimeout(save,2000);clearTimeout(tT);tT=setTimeout(()=>{allT?thumbs():thumbOne();allT=false},250)}
 $('#un').onclick=undo;$('#re').onclick=redo;
 async function save(){clearTimeout(tA);if(saving||!dirty)return;saving=true;stat('Saving…');const body={title:deck.title||'Untitled',data:deck};
- try{if(id)await api('decks/'+id,'PUT',body);else id=(await api('decks','POST',body)).id;dirty=false;stat('✓ Saved to your account')}catch(e){stat(e.message)}saving=false}
+ try{if(id)await api('decks/'+id,'PUT',body);else id=(await api('decks','POST',body)).id;dirty=false;stat('✓ Saved to your account');try{parent!==window&&parent.postMessage({retroos:'saved'},'*')}catch{}}catch(e){stat(e.message)}saving=false}
 $('#sv').onclick=()=>{dirty=true;save()};
 $('#ttl').oninput=e=>{deck.title=e.target.value;changed()};
 addEventListener('visibilitychange',()=>{if(document.hidden&&dirty)save()});
@@ -728,11 +728,12 @@ $('#hfs').onclick=hvFs;$('#hrl').onclick=()=>{if(deck.html)loadHtml()};
 $('#hrs').onclick=async()=>{if(deck.html&&await ask('Text edits and settings saved inside this deck will be forgotten and it will restart as originally uploaded.',{title:'Forget saved edits?',ok:'Forget edits'})){deck.ls={};changed();loadHtml()}};
 $('#hdl').onclick=()=>{if(!deck.html)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([deck.html],{type:'text/html'}));a.download=(deck.title||'presentation').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 addEventListener('message',e=>{if(!deck.html||e.source!==HF.contentWindow)return;const m=e.data;if(m&&m.retroos==='ls'&&m.data&&typeof m.data==='object'){const o=deck.ls;deck.ls=m.data;if(JSON.stringify(deck).length>1750000){deck.ls=o;return}changed()}});
+addEventListener('message',async e=>{if(parent===window||e.source!==parent)return;const m=e.data;if(!m||!m.retroos)return;if(m.retroos==='open'&&m.id){try{await openDeck(m.id)}catch(x){stat(x.message)}}else if(m.retroos==='import'&&typeof m.text==='string')importHtml(new File([m.text],m.name||'deck.html',{type:'text/html'}))});
 let dzT;const isF=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('Files');
 addEventListener('dragover',e=>{if(!isF(e))return;e.preventDefault();document.body.classList.add('xdrop');clearTimeout(dzT);dzT=setTimeout(()=>document.body.classList.remove('xdrop'),300)});
 addEventListener('drop',e=>{document.body.classList.remove('xdrop');const f=e.dataTransfer&&e.dataTransfer.files[0];if(f&&/\.html?$/i.test(f.name)){e.preventDefault();importHtml(f)}});
 
 (async()=>{deck=starter();full();
- try{const{decks}=await api('decks');if(decks.length)await openDeck(decks[0].id);else await newDeck()}catch(e){stat(e.message)}})();
+ try{const q=new URLSearchParams(location.search).get('open'),{decks}=await api('decks');if(q)await openDeck(q);else if(decks.length)await openDeck(decks[0].id);else await newDeck()}catch(e){stat(e.message)}try{parent!==window&&parent.postMessage({retroos:'ready'},'*')}catch{}})();
 </script>
 </body></html>
