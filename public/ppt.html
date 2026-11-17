@@ -348,8 +348,8 @@ code{display:block;background:#0006;border-radius:6px;padding:6px;font-size:11px
 #hb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:var(--ui);border-bottom:1px solid var(--ln)}
 #hb span{color:var(--mu);font-size:12px}#hb .sp{flex:1}
 #hvf{display:block;width:100%;height:100%;min-height:0;border:0;background:#000}
-body.hd #un,body.hd #re{display:none}
-body.dz:after{content:"Drop your .html presentation to import it";position:fixed;inset:12px;z-index:200;display:grid;place-items:center;border:3px dashed var(--g);border-radius:18px;background:#060d0bd9;color:var(--g);font:800 24px Manrope,sans-serif;pointer-events:none}
+body.xhm #un,body.xhm #re{display:none}
+body.xdrop:after{content:"Drop your .html presentation to import it";position:fixed;inset:12px;z-index:200;display:grid;place-items:center;border:3px dashed var(--g);border-radius:18px;background:#060d0bd9;color:var(--g);font:800 24px Manrope,sans-serif;pointer-events:none}
 </style></head>
 <body>
 <header id="top">
@@ -457,7 +457,7 @@ function thumbs(){$('#thumbs').innerHTML=deck.slides.map((s,i)=>`<div class="th$
 function thumbOne(){const t=$('#thumbs .th.cur .tf');if(t)t.innerHTML=slideHTML(deck.slides[cur],deck.theme,'tn')}
 function redraw(o){const el=$('#fr [data-id="'+o.id+'"]');if(!el)return render();const t=document.createElement('div');t.innerHTML=objHTML(o);el.replaceWith(t.firstElementChild);markSel()}
 function markSel(){$$('#fr .ob.sel').forEach(e=>{e.classList.remove('sel');e.querySelectorAll('.hd,.rh').forEach(x=>x.remove())});const o=curObj(),el=o&&$('#fr [data-id="'+o.id+'"]');if(el){el.classList.add('sel');if(!o.lk)el.insertAdjacentHTML('beforeend','<i class="rh" title="Rotate"></i><i class="hd" title="Resize"></i>')}qa()}
-function full(){const h=!!deck.html;document.body.classList.toggle('hd',h);$('#hv').hidden=!h;$('main').hidden=h;if(h){$('#ttl').value=deck.title;return}if($('#hvf').dataset.on){$('#hvf').srcdoc='';delete $('#hvf').dataset.on}render();thumbs();pane();$('#ttl').value=deck.title}
+function full(){const h=!!deck.html;document.body.classList.toggle('xhm',h);$('#hv').hidden=!h;$('main').hidden=h;if(h){$('#ttl').value=deck.title;return}if($('#hvf').dataset.on){$('#hvf').srcdoc='';delete $('#hvf').dataset.on}render();thumbs();pane();$('#ttl').value=deck.title}
 function tabsUI(){$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==tab))}
 function select(i){sel=i;if(i)tab='edit';else if(tab=='edit')tab='add';tabsUI();markSel();pane()}
 function qa(){const o=curObj(),b=$('#qa');if(!o){b.innerHTML='<span class="hint">Tap an object to edit it · double-click text to type · the Insert tab adds new things</span>';return}
@@ -729,8 +729,8 @@ $('#hrs').onclick=async()=>{if(deck.html&&await ask('Text edits and settings sav
 $('#hdl').onclick=()=>{if(!deck.html)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([deck.html],{type:'text/html'}));a.download=(deck.title||'presentation').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
 addEventListener('message',e=>{if(!deck.html||e.source!==HF.contentWindow)return;const m=e.data;if(m&&m.retroos==='ls'&&m.data&&typeof m.data==='object'){const o=deck.ls;deck.ls=m.data;if(JSON.stringify(deck).length>1750000){deck.ls=o;return}changed()}});
 let dzT;const isF=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('Files');
-addEventListener('dragover',e=>{if(!isF(e))return;e.preventDefault();document.body.classList.add('dz');clearTimeout(dzT);dzT=setTimeout(()=>document.body.classList.remove('dz'),300)});
-addEventListener('drop',e=>{document.body.classList.remove('dz');const f=e.dataTransfer&&e.dataTransfer.files[0];if(f&&/\.html?$/i.test(f.name)){e.preventDefault();importHtml(f)}});
+addEventListener('dragover',e=>{if(!isF(e))return;e.preventDefault();document.body.classList.add('xdrop');clearTimeout(dzT);dzT=setTimeout(()=>document.body.classList.remove('xdrop'),300)});
+addEventListener('drop',e=>{document.body.classList.remove('xdrop');const f=e.dataTransfer&&e.dataTransfer.files[0];if(f&&/\.html?$/i.test(f.name)){e.preventDefault();importHtml(f)}});
 
 (async()=>{deck=starter();full();
  try{const{decks}=await api('decks');if(decks.length)await openDeck(decks[0].id);else await newDeck()}catch(e){stat(e.message)}})();
