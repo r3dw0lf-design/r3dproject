@@ -342,17 +342,26 @@ th:nth-child(1),td:nth-child(1){--ci:0}th:nth-child(2),td:nth-child(2){--ci:1}th
 .pal,.des{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pal button{display:flex;flex-wrap:wrap;padding:5px;font-size:11px;text-align:left}.pal i{display:block;width:25%;height:14px}.pal span{width:100%;margin-top:4px}
 .des button{padding:8px;text-align:left;min-height:64px;display:flex;flex-direction:column;gap:6px;font-size:18px;line-height:1.1}.des em{display:flex;gap:3px}.des em i{width:16px;height:16px;border-radius:50%;border:1px solid #fff4}
 code{display:block;background:#0006;border-radius:6px;padding:6px;font-size:11px;word-break:break-all;color:var(--mu)}
+
+/* ===== HTML deck importer ===== */
+#hv{min-height:0;display:grid;grid-template-rows:auto 1fr}
+#hb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:var(--ui);border-bottom:1px solid var(--ln)}
+#hb span{color:var(--mu);font-size:12px}#hb .sp{flex:1}
+#hvf{display:block;width:100%;height:100%;min-height:0;border:0;background:#000}
+body.hd #un,body.hd #re{display:none}
+body.dz:after{content:"Drop your .html presentation to import it";position:fixed;inset:12px;z-index:200;display:grid;place-items:center;border:3px dashed var(--g);border-radius:18px;background:#060d0bd9;color:var(--g);font:800 24px Manrope,sans-serif;pointer-events:none}
 </style></head>
 <body>
 <header id="top">
  <button id="exit" title="Save and go back to RetroOS">◀ RetroOS</button><input id="ttl" aria-label="Deck title" maxlength="80" placeholder="Deck title"><span id="st"></span><span class="sp"></span>
- <button id="un" title="Undo (Ctrl+Z)">↶ Undo</button><button id="re" title="Redo (Ctrl+Shift+Z)">↷ Redo</button><button id="dk">My decks</button><button id="nw">New</button><button id="sv" title="Ctrl+S">Save</button><button id="hp" title="Help and shortcuts">?</button><button id="pr" class="on" title="F5">Present ▶</button>
+ <button id="un" title="Undo (Ctrl+Z)">↶ Undo</button><button id="re" title="Redo (Ctrl+Shift+Z)">↷ Redo</button><button id="ih" title="Upload an HTML presentation you made — it runs exactly as built">⬆ Import HTML</button><input type="file" id="hf" accept=".html,.htm,text/html" hidden><button id="dk">My decks</button><button id="nw">New</button><button id="sv" title="Ctrl+S">Save</button><button id="hp" title="Help and shortcuts">?</button><button id="pr" class="on" title="F5">Present ▶</button>
 </header>
 <main>
  <aside id="slc"><div id="thumbs"></div><div class="srow"><button id="as" title="Add a blank slide after this one">+ New slide</button><button id="ds" title="Make a copy of this slide">Duplicate</button><button id="rs" title="Delete this slide">Delete</button><button id="ms" title="Move this slide earlier">↑ Earlier</button><button id="mn" title="Move this slide later">↓ Later</button></div></aside>
  <section id="stagebox"><div id="tip" hidden></div><div id="qa"></div><div id="sw"><div id="fr"></div></div><div id="sb"><button id="zo" title="Zoom out">−</button><span id="zl">100%</span><button id="zi" title="Zoom in">+</button><button id="zf">Fit</button><button id="sn" class="on" title="Snap to centre and other objects">Snap on</button><span class="sp"></span><button id="pl">▶ Preview animations</button></div></section>
  <aside id="side"><nav id="tabs"><button data-t="add" class="on">Insert</button><button data-t="edit">Format</button><button data-t="slide">Slide</button><button data-t="deck">Design</button></nav><div id="pane"></div></aside>
 </main>
+<section id="hv" hidden><div id="hb"><b>HTML deck</b><span>Runs exactly as you built it — its own animations, scripts and styles all work.</span><span class="sp"></span><button id="hfs" class="on">⛶ Present full screen</button><button id="hrl" title="Restart the deck">↻ Restart</button><button id="hrs" title="Forget text edits and settings saved inside this deck">Forget edits</button><button id="hdl">⬇ Download .html</button></div><iframe id="hvf" title="HTML deck" allow="fullscreen; autoplay; clipboard-write" allowfullscreen sandbox="allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-downloads allow-presentation"></iframe></section>
 <div id="modal" hidden></div><div id="pres" hidden></div><div id="dlg" hidden></div><div id="cpk" hidden></div><div id="tour" hidden></div><div id="toast" role="status"></div>
 
 <script>
@@ -448,7 +457,7 @@ function thumbs(){$('#thumbs').innerHTML=deck.slides.map((s,i)=>`<div class="th$
 function thumbOne(){const t=$('#thumbs .th.cur .tf');if(t)t.innerHTML=slideHTML(deck.slides[cur],deck.theme,'tn')}
 function redraw(o){const el=$('#fr [data-id="'+o.id+'"]');if(!el)return render();const t=document.createElement('div');t.innerHTML=objHTML(o);el.replaceWith(t.firstElementChild);markSel()}
 function markSel(){$$('#fr .ob.sel').forEach(e=>{e.classList.remove('sel');e.querySelectorAll('.hd,.rh').forEach(x=>x.remove())});const o=curObj(),el=o&&$('#fr [data-id="'+o.id+'"]');if(el){el.classList.add('sel');if(!o.lk)el.insertAdjacentHTML('beforeend','<i class="rh" title="Rotate"></i><i class="hd" title="Resize"></i>')}qa()}
-function full(){render();thumbs();pane();$('#ttl').value=deck.title}
+function full(){const h=!!deck.html;document.body.classList.toggle('hd',h);$('#hv').hidden=!h;$('main').hidden=h;if(h){$('#ttl').value=deck.title;return}if($('#hvf').dataset.on){$('#hvf').srcdoc='';delete $('#hvf').dataset.on}render();thumbs();pane();$('#ttl').value=deck.title}
 function tabsUI(){$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t==tab))}
 function select(i){sel=i;if(i)tab='edit';else if(tab=='edit')tab='add';tabsUI();markSel();pane()}
 function qa(){const o=curObj(),b=$('#qa');if(!o){b.innerHTML='<span class="hint">Tap an object to edit it · double-click text to type · the Insert tab adds new things</span>';return}
@@ -607,7 +616,7 @@ $('#sn').onclick=()=>{SNAP=!SNAP;$('#sn').classList.toggle('on',SNAP);$('#sn').t
 
 /* ---------- present ---------- */
 let fsOn=false;
-function present(){pi=cur;$('#pres').hidden=false;try{document.documentElement.requestFullscreen?.().then(()=>{fsOn=true}).catch(()=>{})}catch{}pshow()}
+function present(){if(deck.html){hvFs();return}pi=cur;$('#pres').hidden=false;try{document.documentElement.requestFullscreen?.().then(()=>{fsOn=true}).catch(()=>{})}catch{}pshow()}
 function pshow(){const p=$('#pres'),s=Math.min(innerWidth/1280,innerHeight/720),sl=deck.slides[pi],n=deck.slides.length;
  p.innerHTML=`<div class="pw" style="--trn:${TRN[sl.tr||'fade']||'trfade'}">${slideHTML(sl,deck.theme,'pm')}</div>`;
  const e=p.querySelector('.sl');e.style.cssText+=`;transform:scale(${s});left:${(innerWidth-1280*s)/2}px;top:${(innerHeight-720*s)/2}px`;void e.offsetWidth;e.classList.add('on');
@@ -621,7 +630,7 @@ document.addEventListener('fullscreenchange',()=>{if(Date.now()<fsIgnore)return;
 addEventListener('resize',()=>{if(!$('#pres').hidden)pshow();else render()});
 
 /* ---------- decks, help, tip ---------- */
-async function openDeck(i){if(dirty)await save();const d=await api('decks/'+i);deck=d.data;deck.title=d.title;id=d.id;dirty=false;hist=[];fut=[];cur=0;sel=null;tab='add';tabsUI();full();stat('Opened')}
+async function openDeck(i){if(dirty)await save();const d=await api('decks/'+i);deck=d.data;deck.title=d.title;id=d.id;dirty=false;hist=[];fut=[];cur=0;sel=null;tab='add';tabsUI();full();if(deck.html)loadHtml();stat('Opened')}
 async function newDeck(){if(dirty)await save();deck=starter();id=null;hist=[];fut=[];cur=0;sel=null;tab='add';tabsUI();full();changed(true)}
 async function showDecks(){const m=$('#modal');m.hidden=false;m.innerHTML='<div class="mb"><h3>My decks</h3><p>Loading…</p></div>';
  try{const{decks}=await api('decks');m.innerHTML=`<div class="mb"><h3>My decks</h3>${decks.length?decks.map(d=>`<div class="dr"><span>${esc(d.title)}<small>${new Date(d.updated).toLocaleString()}</small></span><button data-o="${d.id}">Open</button><button data-d="${d.id}">Delete</button></div>`).join(''):'<p>No saved decks yet.</p>'}<div class="btns"><button data-n>New deck</button><button data-x>Close</button></div></div>`}
@@ -695,6 +704,34 @@ addEventListener('keydown',e=>{const k=e.key;
  const st=e.shiftKey?10:1,m={ArrowLeft:['x',-st],ArrowRight:['x',st],ArrowUp:['y',-st],ArrowDown:['y',st]}[k];if(m){e.preventDefault();snap();o[m[0]]+=m[1];redraw(o);changed()}});
 
 /* ---------- start ---------- */
+
+/* ---------- import any HTML presentation (runs in a sandboxed frame so every custom feature works) ---------- */
+const HF=$('#hvf'),HMAX=1500000;
+const lsShim=ls=>'<script>(function(){var d='+JSON.stringify(ls||{}).replace(/</g,'\\u003c')+';function n(){try{parent.postMessage({retroos:"ls",data:d},"*")}catch(e){}}var S={getItem:function(k){return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[k]=String(v);n()},removeItem:function(k){delete d[k];n()},clear:function(){d={};n()},key:function(i){var k=Object.keys(d);return i<k.length?k[i]:null}};Object.defineProperty(S,"length",{get:function(){return Object.keys(d).length}});var M={},T={getItem:function(k){return k in M?M[k]:null},setItem:function(k,v){M[k]=String(v)},removeItem:function(k){delete M[k]},clear:function(){M={}},key:function(i){var k=Object.keys(M);return i<k.length?k[i]:null}};Object.defineProperty(T,"length",{get:function(){return Object.keys(M).length}});try{Object.defineProperty(window,"localStorage",{value:S,configurable:true})}catch(e){}try{Object.defineProperty(window,"sessionStorage",{value:T,configurable:true})}catch(e){}})()<\/script>';
+function withShim(html,ls){const sh=lsShim(ls);let m=/<head[^>]*>/i.exec(html)||/<html[^>]*>/i.exec(html);if(m){const i=m.index+m[0].length;return html.slice(0,i)+sh+html.slice(i)}const dm=/^\s*<!doctype[^>]*>/i.exec(html),i=dm?dm[0].length:0;return html.slice(0,i)+sh+html.slice(i)}
+function loadHtml(){HF.dataset.on=1;HF.srcdoc=withShim(deck.html,deck.ls)}
+function hvFs(){try{(HF.requestFullscreen||HF.webkitRequestFullscreen).call(HF);HF.focus()}catch{toast('Your browser blocked full screen — try the deck\u2019s own Present button.')}}
+async function importHtml(file){
+ if(!file)return;
+ if(!/\.html?$/i.test(file.name)&&!/html/.test(file.type)){toast('Please choose an .html file');return}
+ if(file.size>HMAX){toast('That file is '+(file.size/1e6).toFixed(1)+' MB — the limit is about 1.5 MB. Remove big embedded images and try again.');return}
+ const t=await file.text();
+ if(!/<\s*(html|body|div|section|script|style|main)/i.test(t)){toast('That does not look like an HTML presentation');return}
+ if(JSON.stringify({html:t}).length>1700000){toast('That file is too large to store. Try removing embedded images.');return}
+ if(dirty)await save();
+ const m=/<title[^>]*>([\s\S]*?)<\/title>/i.exec(t),ttl=((m&&m[1].replace(/\s+/g,' ').trim())||file.name.replace(/\.html?$/i,'')).slice(0,80);
+ deck={title:ttl,theme:starter().theme,slides:[{objs:[],tr:'glide'}],html:t,ls:{}};id=null;hist=[];fut=[];cur=0;sel=null;tab='add';tabsUI();full();loadHtml();changed(true);
+ toast('Imported \u201c'+ttl+'\u201d. Its own animations and features run exactly as you built them.')}
+$('#ih').onclick=()=>$('#hf').click();
+$('#hf').onchange=e=>{const f=e.target.files[0];e.target.value='';importHtml(f)};
+$('#hfs').onclick=hvFs;$('#hrl').onclick=()=>{if(deck.html)loadHtml()};
+$('#hrs').onclick=async()=>{if(deck.html&&await ask('Text edits and settings saved inside this deck will be forgotten and it will restart as originally uploaded.',{title:'Forget saved edits?',ok:'Forget edits'})){deck.ls={};changed();loadHtml()}};
+$('#hdl').onclick=()=>{if(!deck.html)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([deck.html],{type:'text/html'}));a.download=(deck.title||'presentation').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+addEventListener('message',e=>{if(!deck.html||e.source!==HF.contentWindow)return;const m=e.data;if(m&&m.retroos==='ls'&&m.data&&typeof m.data==='object'){const o=deck.ls;deck.ls=m.data;if(JSON.stringify(deck).length>1750000){deck.ls=o;return}changed()}});
+let dzT;const isF=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('Files');
+addEventListener('dragover',e=>{if(!isF(e))return;e.preventDefault();document.body.classList.add('dz');clearTimeout(dzT);dzT=setTimeout(()=>document.body.classList.remove('dz'),300)});
+addEventListener('drop',e=>{document.body.classList.remove('dz');const f=e.dataTransfer&&e.dataTransfer.files[0];if(f&&/\.html?$/i.test(f.name)){e.preventDefault();importHtml(f)}});
+
 (async()=>{deck=starter();full();
  try{const{decks}=await api('decks');if(decks.length)await openDeck(decks[0].id);else await newDeck()}catch(e){stat(e.message)}})();
 </script>
